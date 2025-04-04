@@ -1,0 +1,5 @@
+"gsl_ran_beta(rng, a, b)" 100000 0.209859 26280064
+"generate_opt" 100000 1.653653 2499840
+"generate_cbs" 100000 3.362918 5207163
+"generate_opt_ext" 100000 1.744446 2600074
+"generate_cbs_ext" 100000 5.787471 5373844

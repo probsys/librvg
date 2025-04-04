@@ -1,0 +1,5 @@
+"gsl_ran_binomial(rng, p, n)" 100000 0.202315 22479360
+"generate_opt" 100000 2.630723 508160
+"generate_cbs" 100000 3.145742 1573721
+"generate_opt_ext" 100000 2.780925 507526
+"generate_cbs_ext" 100000 4.368895 1775849

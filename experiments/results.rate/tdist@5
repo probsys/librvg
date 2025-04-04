@@ -1,0 +1,5 @@
+"gsl_ran_tdist(rng, nu)" 100000 0.252333 27976896
+"generate_opt" 100000 1.877983 2499863
+"generate_cbs" 100000 3.776541 4945959
+"generate_opt_ext" 100000 1.912315 2599812
+"generate_cbs_ext" 100000 5.858334 5126472

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>api</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="tools/style.css" />
+</head>
+<body>
+<!--
+  This file was generated from "api.md.in" by mkdoc.py
+  DO NOT EDIT
+-->
+
+<h1 id="api-for-librvg">API for librvg</h1>
+<p>Author: <a href="https://cs.cmu.edu/~fsaad">Feras A. Saad</a></p>
+<p>This document describes the API for librvg. Background on the
+mathematical details are given in the following publication [SL25]:</p>
+<blockquote>
+<p>Random Variate Generation with Formal Guarantees. Feras Saad and
+Wonyeol Lee. Proceedings of the ACM on Programming Languages 9(PLDI),
+2025.</p>
+</blockquote>
+<p>The API functions of librvg is documented using the following
+format.</p>
+<blockquote>
+<hr />
+<pre>
+return_type function_name(parameters ...)
+</pre>
+
+<ul>
+<li>English description.</li>
+</ul>
+</blockquote>
+<p>To generate random variates, librvg operates using numerical
+specifications of cumulative distribution functions (CDF) and survival
+functions (SF), which are both available as the following type in
+<code>generate.h</code>:</p>
+<pre><code>typedef float  (*cdf32_t)(double x);</code></pre>
+<p>In words, <code>cdf32_t</code> is a function type that takes as input
+a double <code>x</code>. When used as a CDF, it returns a float
+representing Pr(X &lt;= x). When used as an SF, it returns a float
+representing Pr(X &gt; x).</p>
+<p>An advanced feature of librvg is the notion of a "dual distribution
+function" (DDF), which combines a numerical CDF and SF to enable
+extended accuracy sampling. This representation is described in Section
+6 of [SL25]. The type of a DDF is given in <code>generate.h</code>
+as</p>
+<pre><code>typedef void (*ddf32_t)(double x, bool * b, float * p);</code></pre>
+<p>The function type <code>ddf32_t</code> takes as input a double
+<code>x</code>, and writes the result of evaluating a DDF at x to the
+pointers <code>b</code> and <code>p</code>. The interpretation of
+<code>b</code> and <code>p</code> are as follows:</p>
+<ul>
+<li>If <code>b</code> is set to 0, then
+<code>Pr(X&lt;=x) = p</code></li>
+<li>If <code>b</code> is set to 1, then
+<code>Pr(X&lt;=x) = 1 - p</code></li>
+</ul>
+<p>Functions that operate using a DDF have an <code>_ext</code> suffix
+(meaning "extended").</p>
+<h2 id="api-in-generateh">API in <a
+href="./generate.h"><code>generate.h</code></a></h2>
+<h3 id="main-interface">Main Interface</h3>
+<hr />
+<p><a id="generate_opt"></a><pre> double
+<a href="generate.h#L39">generate_opt</a>(cdf32_t cdf, struct flip_state
+* prng); </pre></p>
+<ul>
+<li>Generate random variables optimally from <code>cdf</code>.</li>
+</ul>
+<hr />
+<p><a id="generate_opt_ext"></a><pre> double
+<a href="generate.h#L42">generate_opt_ext</a>(ddf32_t ddf, struct
+flip_state * prng); </pre></p>
+<ul>
+<li>Generate random variables optimally from <code>ddf</code>.</li>
+</ul>
+<hr />
+<p><a id="quantile"></a><pre> double
+<a href="generate.h#L45">quantile</a>(cdf32_t cdf, float q); </pre></p>
+<ul>
+<li>Compute the exact <code>q</code>-quantile of the <code>cdf</code>,
+where <code>q</code> must be in [0,1].</li>
+</ul>
+<hr />
+<p><a id="quantile_sf"></a><pre> double
+<a href="generate.h#L48">quantile_sf</a>(cdf32_t sf, float q);
+</pre></p>
+<ul>
+<li>Compute the exact <code>q</code>-quantile of the <code>sf</code>,
+where <code>q</code> must be in [0,1].</li>
+</ul>
+<hr />
+<p><a id="quantile_ext"></a><pre> double
+<a href="generate.h#L51">quantile_ext</a>(ddf32_t ddf, bool d, float q);
+</pre></p>
+<ul>
+<li>Compute the exact <code>q</code>-quantile of the <code>ddf</code>,
+where <code>q</code> must be in [0,1].</li>
+</ul>
+<hr />
+<p><a id="bounds_quantile"></a><pre> void
+<a href="generate.h#L54">bounds_quantile</a>(cdf32_t cdf, double * xlo,
+double * xhi); </pre></p>
+<ul>
+<li>Compute the exact lower <code>xlo</code> and upper <code>xhi</code>
+bound of <code>cdf</code>.</li>
+</ul>
+<hr />
+<p><a id="bounds_quantile_sf"></a><pre> void
+<a href="generate.h#L57">bounds_quantile_sf</a>(cdf32_t sf, double *
+xlo, double * xhi); </pre></p>
+<ul>
+<li>Compute the exact lower <code>xlo</code> and upper <code>xhi</code>
+bound of <code>sf</code>.</li>
+</ul>
+<hr />
+<p><a id="bounds_quantile_ext"></a><pre> void
+<a href="generate.h#L60">bounds_quantile_ext</a>(ddf32_t ddf, double *
+xlo, double * xhi); </pre></p>
+<ul>
+<li>Compute the exact lower <code>xlo</code> and upper <code>xhi</code>
+bound of <code>ddf</code>.</li>
+</ul>
+<h3 id="importing-a-cdf-or-sf-from-the-gnu-scientific-library">Importing
+a CDF or SF from the GNU Scientific Library</h3>
+<p>librvg can interporate with existing CDF or SF implementations from
+the GNU Scientific Library (GSL, [1]). In the GSL, the CDF are named
+<code>gsl_cdf_[dist]_P</code> and SF are named
+<code>gsl_cdf_[dist]_Q</code>.</p>
+<p>[1] <a
+href="https://www.gnu.org/software/gsl/doc/html/randist.html">https://www.gnu.org/software/gsl/doc/html/randist.html</a></p>
+<p>The following macros are available:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Make a cumulative distribution function over doubles from the GSL.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MAKE_CDF_P</span><span class="op">(</span><span class="pp">name</span><span class="op">,</span><span class="pp"> func</span><span class="op">,</span><span class="pp"> </span><span class="op">...)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Make a survival distribution function over doubles from the GSL.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MAKE_CDF_Q</span><span class="op">(</span><span class="pp">name</span><span class="op">,</span><span class="pp"> func</span><span class="op">,</span><span class="pp"> </span><span class="op">...)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Make a cumulative distribution function over unsigned integers from the GSL.</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MAKE_CDF_UINT_P</span><span class="op">(</span><span class="pp">name</span><span class="op">,</span><span class="pp"> func</span><span class="op">,</span><span class="pp"> </span><span class="op">...)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Make a survival distribution function over unsigned integers from the GSL.</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MAKE_CDF_UINT_Q</span><span class="op">(</span><span class="pp">name</span><span class="op">,</span><span class="pp"> func</span><span class="op">,</span><span class="pp"> </span><span class="op">...)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Make a dual distribution function.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MAKE_DDF</span><span class="op">(</span><span class="pp">ddf</span><span class="op">,</span><span class="pp"> cdf</span><span class="op">,</span><span class="pp"> sf</span><span class="op">)</span></span></code></pre></div>
+<p>Refer to examples/main.c for an illustration of how to use these
+macros.</p>
+<p>The <code>MAKE_DDF</code> macro is not specific to a <code>cdf</code>
+or <code>sf</code> created from the GSL, it can be used for any such
+pairing.</p>
+<h3 id="baseline-exact-generators">Baseline Exact Generators</h3>
+<p>librvg also includes implementations of the Conditional Bit Sampling
+method. These functions are included for illustrative purposes only, and
+is described in Section II.B of the following paper:</p>
+<blockquote>
+<p>Pseudonoise with Arbitrary Amplitude Distribution--Part I: Theory
+John S. Sobolewski; W. H. Payne IEEE Transactions on Computers (Volume:
+C-21, Issue: 4, April 1972) <a
+href="https://doi.org/10.1109/TC.1972.5008973">https://doi.org/10.1109/TC.1972.5008973</a></p>
+</blockquote>
+<p>Their performance is generally inferior to that of
+<code>generate_opt</code> in terms of entropy consumption and runtime,
+as it uses arbitrary precision arithmetic via the The GNU MP Bignum
+Library (libgmp).</p>
+<hr />
+<p><a id="generate_cbs"></a><pre> double
+<a href="generate.h#L63">generate_cbs</a>(cdf32_t cdf, struct flip_state
+* prng); </pre></p>
+<ul>
+<li>Generate random variables from <code>cdf</code> using Conditional
+Bit Sampling.</li>
+</ul>
+<hr />
+<p><a id="generate_cbs_ext"></a><pre> double
+<a href="generate.h#L66">generate_cbs_ext</a>(ddf32_t ddf, struct
+flip_state * prng); </pre></p>
+<ul>
+<li>Generate random variables from <code>ddf</code> using Conditional
+Bit Sampling.</li>
+</ul>
+<h2 id="api-in-fliph">API in <a
+href="./flip.h"><code>flip.h</code></a></h2>
+<p>The random variate generators produced by librvg consume random bits
+one at a time. This design is in contrast to traditional random variate
+generators, which always consume one or more full machine words of
+random bits per output variate. The following functions can be used to
+create a stream of random bits from a pseudorandom number generator from
+the GNU Scientific Library.</p>
+<hr />
+<p><a id=""></a><pre> <a href="flip.h#L17"></a>struct flip_state;
+</pre></p>
+<ul>
+<li>A struct that maintains the state of a sequence of flips.</li>
+</ul>
+<hr />
+<p><a id="gsl_rng_buffer_size"></a><pre> int
+<a href="flip.h#L32">gsl_rng_buffer_size</a>(gsl_rng * rng); </pre></p>
+<ul>
+<li>Buffer size of <code>rng</code>, i.e., number of bits in
+<code>gsl_rng_max(rng)</code>.</li>
+</ul>
+<hr />
+<p><a id="make_flip_state"></a><pre> struct flip_state
+<a href="flip.h#L35">make_flip_state</a>(gsl_rng * rng); </pre></p>
+<ul>
+<li>Initialize a <code>flip_state</code> using an <code>rng</code>.</li>
+</ul>
+<hr />
+<p><a id="flip"></a><pre> unsigned char
+<a href="flip.h#L38">flip</a>(struct flip_state * s); </pre></p>
+<ul>
+<li>Generate a single bit from a <code>flip_state</code>.</li>
+</ul>
+<hr />
+<p><a id="flip_k"></a><pre> unsigned long long
+<a href="flip.h#L41">flip_k</a>(struct flip_state * s, int k);
+</pre></p>
+<ul>
+<li>Generate a random <code>k</code>-bit number from a
+<code>flip_state</code>.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,6 @@
+*.a
+*.o
+build/
+librvg.tar.gz
+readme.html
+api.html

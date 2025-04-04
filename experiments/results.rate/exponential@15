@@ -1,0 +1,5 @@
+"gsl_ran_exponential(rng, mu)" 100000 0.093602 6400000
+"generate_opt" 100000 0.385139 2500580
+"generate_cbs" 100000 2.025362 4844637
+"generate_opt_ext" 100000 0.362796 2599990
+"generate_cbs_ext" 100000 4.304827 5170835

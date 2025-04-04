@@ -1,0 +1,5 @@
+"gsl_ran_laplace(rng, a)" 100000 0.076962 6400000
+"generate_opt" 100000 0.293757 2500939
+"generate_cbs" 100000 1.839750 4775021
+"generate_opt_ext" 100000 0.325893 2599718
+"generate_cbs_ext" 100000 3.884709 4965915

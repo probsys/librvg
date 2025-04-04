@@ -1,0 +1,5 @@
+"gsl_ran_weibull(rng, a, b)" 100000 0.090978 6400000
+"generate_opt" 100000 0.634179 2500215
+"generate_cbs" 100000 2.461713 5530475
+"generate_opt_ext" 100000 0.598393 2599846
+"generate_cbs_ext" 100000 4.853172 5705286

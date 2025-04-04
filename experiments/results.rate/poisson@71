@@ -1,0 +1,5 @@
+"gsl_ran_poisson(rng, mu)" 100000 0.520735 69722112
+"generate_opt" 100000 4.476173 620056
+"generate_cbs" 100000 4.944110 1839237
+"generate_opt_ext" 100000 4.481149 620150
+"generate_cbs_ext" 100000 6.043390 1991129

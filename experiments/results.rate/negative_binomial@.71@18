@@ -1,0 +1,5 @@
+"gsl_ran_negative_binomial(rng, p, a)" 100000 0.489513 66583040
+"generate_opt" 100000 1.863172 471049
+"generate_cbs" 100000 2.237661 1245528
+"generate_opt_ext" 100000 1.885467 470197
+"generate_cbs_ext" 100000 2.928363 1427102

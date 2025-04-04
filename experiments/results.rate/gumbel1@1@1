@@ -1,0 +1,5 @@
+"gsl_ran_gumbel1(rng, a, b)" 100000 0.077785 6400000
+"generate_opt" 100000 0.402874 2499631
+"generate_cbs" 100000 2.167453 5032581
+"generate_opt_ext" 100000 0.572356 2600109
+"generate_cbs_ext" 100000 4.410305 5215244

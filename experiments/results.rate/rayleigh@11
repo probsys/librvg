@@ -1,0 +1,5 @@
+"gsl_ran_rayleigh(rng, sigma)" 100000 0.083789 6400000
+"generate_opt" 100000 0.388772 2500185
+"generate_cbs" 100000 2.013690 4851600
+"generate_opt_ext" 100000 0.376350 2599550
+"generate_cbs_ext" 100000 4.114472 5025866

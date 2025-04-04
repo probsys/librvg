@@ -1,0 +1,5 @@
+"gsl_ran_pareto(rng, a, b)" 100000 0.079301 6400000
+"generate_opt" 100000 0.384760 2500825
+"generate_cbs" 100000 1.807383 4598478
+"generate_opt_ext" 100000 0.407000 2599994
+"generate_cbs_ext" 100000 3.850543 4845984
