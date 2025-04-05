@@ -1,0 +1,34 @@
+name: Build on Ubuntu
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt install -y build-essential libgsl-dev libgmp-dev
+
+
+    - name: Build the library
+      run: |
+        make
+
+    - name: Test examples
+      run: |
+        cd examples/
+        make
+        ./main.out
+        ./readme.out
