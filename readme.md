@@ -161,13 +161,16 @@ virtual Docker container, by using the Dockerfile.
 To build the container, first install Docker for your platform using
 the instructions at https://docs.docker.com/get-started/get-docker/.
 
-Then run:
+Step 1. Build the image and container.
 
     $ docker build -f Dockerfile -t librvg .        # build image (~20 mins)
     $ docker run -dit --name librvg librvg:latest   # create container
+
+Step 2. Extract the experiment results to the local filesytem.
+
     $ docker cp librvg:/librvg librvg-build         # extract to ./librvg-build
 
-To launch an interactive terminal in the Docker container, run
+Step 3. (Optional) Launch an interactive terminal in the Docker container.
 
     $ docker start librvg
     $ docker attach librvg

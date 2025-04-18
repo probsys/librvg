@@ -229,11 +229,13 @@ a virtual Docker container, by using the Dockerfile.</p>
 <p>To build the container, first install Docker for your platform using
 the instructions at <a
 href="https://docs.docker.com/get-started/get-docker/">https://docs.docker.com/get-started/get-docker/</a>.</p>
-<p>Then run:</p>
+<p>Step 1. Build the image and container.</p>
 <pre><code>$ docker build -f Dockerfile -t librvg .        # build image (~20 mins)
-$ docker run -dit --name librvg librvg:latest   # create container
-$ docker cp librvg:/librvg librvg-build         # extract to ./librvg-build</code></pre>
-<p>To launch an interactive terminal in the Docker container, run</p>
+$ docker run -dit --name librvg librvg:latest   # create container</code></pre>
+<p>Step 2. Extract the experiment results to the local filesytem.</p>
+<pre><code>$ docker cp librvg:/librvg librvg-build         # extract to ./librvg-build</code></pre>
+<p>Step 3. (Optional) Launch an interactive terminal in the Docker
+container.</p>
 <pre><code>$ docker start librvg
 $ docker attach librvg</code></pre>
 </body>
