@@ -7,9 +7,10 @@ It released under the Apache-2.0 License.
 The methods implemented in librvg are described in the following
 publication.
 
+  > Feras A. Saad and Wonyeol Lee. 2025.
   > Random Variate Generation with Formal Guarantees.
-  > Feras Saad and Wonyeol Lee.
-  > Proceedings of the ACM on Programming Languages 9(PLDI), 2025.
+  > Proc. ACM Program. Lang. 9, PLDI, Article 152 (June 2025), 25 pages.
+  > https://doi.org/10.1145/3729251
 
 For the latest version, please visit https://github.com/probsys/librvg
 
@@ -18,13 +19,10 @@ Overview
 
 The purpose of librvg is to generate random variates from a given
 probability distribution. This probability distribution is specified in
-terms of a numerical implementation of its cumulative distribution function
-(CDF, [1]), and optionally in terms of a separate numerical implementation
-of its survival function (SF, [2]).
-
-  [1] https://en.wikipedia.org/wiki/Cumulative_distribution_function
-
-  [2] https://en.wikipedia.org/wiki/Survival_function
+terms of a numerical implementation of its
+[cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function)
+(CDF), and optionally in terms of a separate numerical implementation of its
+[survival function](https://en.wikipedia.org/wiki/Survival_function) (SF).
 
 Given a CDF specification as a C function, librvg automatically synthesizes
 a function for generating random variates whose probability distribution is
@@ -83,27 +81,25 @@ A CDF F takes as input a double x and returns a float. It is valid if:
   2. F(x) = 1, whenever x is NaN (i.e., if x != x).
   3. F is monotonic, i.e., if x' < x then F(x') <= F(x).
 
-A CDF can be manually implemented as in the above example, or imported from
-the GNU Scientific Library (GSL, [3]), whose CDF functions are named
-`gsl_cdf_[dist]_P`. To use a GSL CDF in librvg, refer to examples/main.c.
+A CDF can be manually implemented as in the above example, or imported from the
+[GNU Scientific Library](https://www.gnu.org/software/gsl/doc/html/randist.html)
+(GSL), whose CDF functions are named `gsl_cdf_[dist]_P`.
+To use a GSL CDF in librvg, refer to examples/main.c.
 
-  [3] https://www.gnu.org/software/gsl/doc/html/randist.html
-
-Given a CDF, librvg also provides an exact implementation of the
-corresponding quantile function (QF, [4]), using `quantile` as shown
-in the above example. The quantile takes as input a CDF F and a
-float q in [0,1], and returns min{ x | q <= F(x) }. In words, it
-is the smallest number x' such that q <= Pr(X <= x').
-
-  [4] https://en.wikipedia.org/wiki/Quantile_function
+Given a CDF, librvg also provides an exact implementation of the corresponding
+[quantile function](https://en.wikipedia.org/wiki/Quantile_function) (QF),
+using `quantile` as shown in the above example.
+The quantile takes as input a CDF F and a float q in [0,1], and returns
+min{ x | q <= F(x) }. In words, it is the smallest number x' such that
+q <= Pr(X <= x').
 
 Installation
 ------------
 
 This software is tested on Ubuntu 24.04. Other Linux distributions are also
 expected to work with minor modifications to the names of the dependencies.
-If you use other OS, you can execute the following steps in Docker, as
-explained in the below section "Running via Docker".
+An alternative approach to installation is by using Docker, as described in
+the next section "Running via Docker".
 
 - Step 1: Install C dependencies:
 
@@ -127,8 +123,8 @@ explained in the below section "Running via Docker".
   To write new programs that use librvg.a, refer to examples/Makefile and
   follow the same build process.
 
-Experiments
------------
+Running Experiments
+-------------------
 
 The experiments/ directory contains programs that produce Table 1, Table 2,
 and Figure 8 of [SL25]. Running the plotting code requires `python3` to be
@@ -159,8 +155,8 @@ installed. The experiments take around 5-10 minutes each.
 Running via Docker
 ------------------
 
-The above commands can also be executed in a virtual Docker container, by
-using the Dockerfile.
+Installing librvg and running the experiments can also be executed in a
+virtual Docker container, by using the Dockerfile.
 
 To build the container, first install Docker for your platform using
 the instructions at https://docs.docker.com/get-started/get-docker/.

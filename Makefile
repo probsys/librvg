@@ -48,6 +48,9 @@ api.md: api.md.in ${FILES.h} tools/mkdoc.py
 %.html: %.md
 	pandoc --quiet -f gfm -t html -c tools/style.css -s -o $@ $<
 
+%.pdf: %.html
+	google-chrome --no-pdf-header-footer --headless --disable-gpu --print-to-pdf=$@ $<
+
 .PHONY: clean
 clean:
 	rm -rf \
