@@ -210,18 +210,27 @@ numpy, and matplotlib libraries installed. The experiments take around
 <li><p>Table 1</p>
 <pre><code>$ cd experiments/
 $ make table1</code></pre>
-<p>The output is
-<code>experiments/results.rate/table_1.txt</code></p></li>
+<p>The output is <code>experiments/results.rate/table_1.txt</code></p>
+<p>These results shows the bits/variate, variates/sec for random variate
+generation using three baselines (GSL, CBS, OPT) on 24 probability
+distributions.</p></li>
 <li><p>Table 2</p>
 <pre><code>$ cd experiments/
 $ make table2</code></pre>
 <p>The outputs are the .png files in
-<code>experiments/results.bounds</code></p></li>
+<code>experiments/results.bounds</code></p>
+<p>These results show the output random of random variates using four
+generation methods (GSL, CDF, SF, DDF) for 13 probability distributions.
+Each row in Table 2 corresponds to a specific png file. In each png
+file, the runtimes are shown under the labels on the y-axis and the
+output ranges are shown on the x-axis.</p></li>
 <li><p>Figure 8</p>
 <pre><code>$ cd experiments/
 $ make figure8</code></pre>
-<p>The output is
-<code>experiments/results.rate/figure_8.png</code></p></li>
+<p>The output is <code>experiments/results.rate/figure_8.png</code></p>
+<p>These results show the ratios of bits/variate and variate/sec using
+the basic and extended-accuracy variants of two methods (CBS,
+OPT).</p></li>
 </ul>
 <h2 id="running-via-docker">Running via Docker</h2>
 <p>Installing librvg and running the experiments can also be executed in

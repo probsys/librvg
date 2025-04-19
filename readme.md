@@ -138,6 +138,10 @@ installed. The experiments take around 5-10 minutes each.
 
   The output is `experiments/results.rate/table_1.txt`
 
+  These results shows the bits/variate, variates/sec for random
+  variate generation using three baselines (GSL, CBS, OPT)
+  on 24 probability distributions.
+
 - Table 2
 
       $ cd experiments/
@@ -145,12 +149,21 @@ installed. The experiments take around 5-10 minutes each.
 
   The outputs are the .png files in `experiments/results.bounds`
 
+  These results show the output random of random variates using four
+  generation methods (GSL, CDF, SF, DDF) for 13 probability distributions.
+  Each row in Table 2 corresponds to a specific png file. In each png file,
+  the runtimes are shown under the labels on the y-axis and the output
+  ranges are shown on the x-axis.
+
 - Figure 8
 
       $ cd experiments/
       $ make figure8
 
   The output is `experiments/results.rate/figure_8.png`
+
+  These results show the ratios of bits/variate and variate/sec using
+  the basic and extended-accuracy variants of two methods (CBS, OPT).
 
 Running via Docker
 ------------------
