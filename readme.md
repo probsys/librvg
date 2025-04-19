@@ -169,7 +169,7 @@ Running via Docker
 ------------------
 
 Installing librvg and running the experiments can also be executed in a
-virtual Docker container, by using the Dockerfile.
+virtual Docker container.
 
 To build the container, first install Docker for your platform using
 the instructions at https://docs.docker.com/get-started/get-docker/.
