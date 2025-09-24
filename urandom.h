@@ -11,7 +11,7 @@
 #define URANDOM_H
 
 #include <sys/random.h>
-#include <gsl/gsl_types.h>
+#include <gsl/gsl_rng.h>
 
 GSL_VAR const gsl_rng_type *gsl_rng_urandom;
 
