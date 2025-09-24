@@ -1,3 +1,4 @@
 gsl_wrap.c
 gsl_wrap.h
 *.o
+*.out
