@@ -1,10 +1,8 @@
 /*
   Name:     flip.h
   Purpose:  Generate a sequence of pseudo-random bits.
-  Author:   F. A. Saad
-  Copyright (C) 2024 Feras A. Saad, All Rights Reserved.
-
-  Released under Apache 2.0; refer to LICENSE.txt
+  Author:   F. Saad
+  Copyright (C) 2024 Feras A. Saad.
 */
 
 #ifndef DISCRETE_H

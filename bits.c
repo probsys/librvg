@@ -1,10 +1,8 @@
 /*
   Name:     bits.c
   Purpose:  Operations on binary representations.
-  Author:   F. A. Saad
-  Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
-
-  Released under Apache 2.0; refer to LICENSE.txt
+  Author:   F. Saad
+  Copyright (C) 2025 CMU Probabilistic Computing Systems Lab
 */
 
 #include <assert.h>

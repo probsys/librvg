@@ -1,10 +1,8 @@
 /*
   Name:     bounds.c
   Purpose:  Computing bounds on GSL and CDF, SF, and DDF generators.
-  Author:   F. A. Saad
-  Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
-
-  Released under Apache 2.0; refer to LICENSE.txt
+  Author:   F. Saad
+  Copyright (C) 2025 CMU Probabilistic Computing Systems Lab
 */
 
 #include <time.h>
