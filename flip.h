@@ -40,7 +40,7 @@ unsigned char flip(struct flip_state * s);
 /** Generate a random `k`-bit number from a `flip_state`. */
 unsigned long long flip_k(struct flip_state * s, int k);
 
-/* Generate a random `k`-bit number from a `flip_state`. */
+/** Generate a random `k`-bit number from a `flip_state`. */
 unsigned long long randint(struct flip_state * s, int k);
 
 #endif

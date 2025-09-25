@@ -1,4 +1,4 @@
-/*
+/**
   Name:     generate.h
   Purpose:  Generate a random variate.
   Author:   F. A. Saad
@@ -74,9 +74,9 @@ double generate_cbs_ext(ddf32_t ddf, struct flip_state * prng);
     return func(x__, ##__VA_ARGS__);            \
   }
 
-/* Make a cumulative distribution over doubles from the GSL. */
+/** Make a cumulative distribution over doubles from the GSL. */
 #define MAKE_CDF_P(name, func, ...) MAKE_CDF_GENERAL(name, func, 1., ##__VA_ARGS__)
-/* Make a cumulative distribution over doubles from the GSL. */
+/** Make a cumulative distribution over doubles from the GSL. */
 #define MAKE_CDF_Q(name, func, ...) MAKE_CDF_GENERAL(name, func, 0., ##__VA_ARGS__)
 
 /* Distribution over unsigned integers. */
@@ -88,37 +88,37 @@ double generate_cbs_ext(ddf32_t ddf, struct flip_state * prng);
     return cdf_func(x__, ##__VA_ARGS__);                 \
   }
 
-/* Make a cumulative distribution over unsigned integers from the GSL. */
+/** Make a cumulative distribution over unsigned integers from the GSL. */
 #define MAKE_CDF_UINT_P(name, func, ...) MAKE_CDF_UINT_GENERAL(name, func, 1., ##__VA_ARGS__)
-/* Make a survival distribution over unsigned integers from the GSL. */
+/** Make a survival distribution over unsigned integers from the GSL. */
 #define MAKE_CDF_UINT_Q(name, func, ...) MAKE_CDF_UINT_GENERAL(name, func, 0., ##__VA_ARGS__)
 
-/* Make a dual distribution function. */
-#define MAKE_DDF(ddf, cdf, sf)                               \
-    const double ddf##__cutoff = quantile(cdf, nextafterf(.5, 1)); \
-    const bool ddf##__sign = signbit(ddf##__cutoff);         \
-    bool ddf##__abort = false;                               \
-    if(0.5 < cdf(nextafter(ddf##__cutoff, -INFINITY))) {     \
+/** Make a dual distribution function. */
+#define MAKE_DDF(name, func_cdf, func_sf)                                \
+    const double name##__cutoff = quantile(func_cdf, nextafterf(.5, 1)); \
+    const bool name##__sign = signbit(name##__cutoff);        \
+    bool name##__abort = false;                               \
+    if(0.5 < func_cdf(nextafter(name##__cutoff, -INFINITY))) {     \
         fprintf(stderr, "Invalid CDF detected.\n");          \
-        ddf##__abort = true;                                 \
+        name##__abort = true;                                \
     }                                                        \
-    if(0.5 <= sf(ddf##__cutoff)) {                           \
+    if(0.5 <= func_sf(name##__cutoff)) {                     \
         fprintf(stderr, "Invalid SF detected.\n");           \
-        ddf##__abort = true;                                 \
+        name##__abort = true;                                \
     }                                                        \
-    if (ddf##__abort) {                                      \
+    if (name##__abort) {                                     \
         exit(1);                                             \
     }                                                        \
-    void ddf(double x, bool * d, float * q) {                \
-        if ((x < ddf##__cutoff)                              \
-                || ((x == ddf##__cutoff)                     \
+    void name(double x, bool * d, float * q) {               \
+        if ((x < name##__cutoff)                             \
+                || ((x == name##__cutoff)                    \
                     && signbit(x)                            \
-                    && !(ddf##__sign))) {                    \
+                    && !(name##__sign))) {                   \
             *d = 0;                                          \
-            *q = cdf(x);                                     \
+            *q = func_cdf(x);                                \
         } else {                                             \
             *d = 1;                                          \
-            *q = sf(x);                                      \
+            *q = func_sf(x);                                 \
         }                                                    \
         assert(check_ddf_val(*d, *q));                       \
      }
