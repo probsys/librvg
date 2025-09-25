@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-
+    name: Build Library
     runs-on: ubuntu-latest
 
     steps:
