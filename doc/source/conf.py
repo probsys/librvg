@@ -17,8 +17,6 @@ extensions              = ['breathe', 'sphinxcontrib.bibtex', 'sphinx.ext.autose
 breathe_projects        = { 'librvg': '../build/dox/xml' }
 breathe_default_project = 'librvg'
 breathe_show_include    = True
-breathe_implementation_filename_extensions = ['.c', '.cc', '.cpp', '.cxx', '.C', '.m', '.mm']
-
 
 master_doc              = 'index'
 primary_domain          = 'c'
@@ -43,3 +41,9 @@ html_theme_options      = {'navigation_depth': 3}
 html_static_path        = ['_static']
 html_css_files          = ['custom.css']
 
+html_context            = {
+                            'display_github': True,
+                            'github_user': 'probsys',
+                            'github_repo': 'librvg',
+                            'github_version': 'master/doc/source/',
+                          }
