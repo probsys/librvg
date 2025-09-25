@@ -1,0 +1,10 @@
+Building the documentation requires Doxygen and Python. The dependencies
+can be installed via
+
+  $ make deps
+
+The documentation is built using
+
+  $ make html
+
+The result is in build/html/index.html

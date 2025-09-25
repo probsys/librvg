@@ -1,5 +1,6 @@
 *.a
 *.o
+*.out
 build/
 librvg.tar.gz
 readme.html
