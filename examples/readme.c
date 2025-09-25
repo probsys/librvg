@@ -7,7 +7,7 @@ int main(int argc, char * argv[]) {
   gsl_rng * rng = gsl_rng_alloc(gsl_rng_default);
   struct flip_state prng = make_flip_state(rng);
 
-  // Implement A custom continuous distribution, F(x) = x^2 over [0,1].
+  // Implement a custom continuous distribution, F(x) = x^2 over [0,1].
   float cdf_x2(double x) {
       if      (x != x)        { return 1; }       // nan
       else if (signbit(x))    { return 0; }       // <= -0.0

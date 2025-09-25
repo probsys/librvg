@@ -1,10 +1,8 @@
-/*
-  Name:     bits.h
-  Purpose:  Operations on binary representations.
-  Author:   F. A. Saad
-  Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
-
-  Released under Apache 2.0; refer to LICENSE.txt
+/**
+* @file         bits.h
+* @brief        Operations on binary representations of numbers
+* @author       F. Saad
+* @copyright    Copyright 2025 CMU Probabilistic Computing Systems Lab
 */
 
 #ifndef BITS_H

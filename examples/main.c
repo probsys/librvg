@@ -1,7 +1,7 @@
 /*
   Name:     main.c
   Purpose:  Example use of the librvg library.
-  Author:   F. A. Saad
+  Author:   F. Saad
   Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
 
   Released under Apache 2.0; refer to LICENSE.txt

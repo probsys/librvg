@@ -1,7 +1,7 @@
 /*
   Name:     gsl_wrap_template.c
   Purpose:  Generate wrapped version of GSL rng objects with counter.
-  Author:   F. A. Saad
+  Author:   F. Saad
   Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
 
   Released under Apache 2.0; refer to LICENSE.txt

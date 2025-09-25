@@ -1,10 +1,7 @@
-/*
-  Name:     bernoulli.h
-  Purpose:  Flip a rational Bernoulli coin.
-  Author:   F. A. Saad
-  Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
-
-  Released under Apache 2.0; refer to LICENSE.txt
+/**
+* @brief        Generate a Bernoulli flip with rational weight
+* @author       F. Saad
+* @copyright    Copyright 2025 CMU Probabilistic Computing Systems Lab
 */
 
 #include <assert.h>
