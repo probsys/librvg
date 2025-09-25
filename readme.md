@@ -1,6 +1,11 @@
 librvg: C Library for Random Variate Generation with Formal Guarantees
 ======================================================================
 
+[![Build](https://github.com/probsys/librvg/actions/workflows/build.yml/badge.svg)](https://github.com/probsys/librvg/actions/workflows/build.yml)
+[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://probsys.github.io/librvg/)
+[![Git Tag](https://img.shields.io/github/v/tag/probsys/libvg)](https://github.com/probsys/libvg/tags)
+[![License](https://img.shields.io/github/license/probsys/libvg?color=lightgrey)](https://github.com/probsys/libvg/blob/main/LICENSE.txt)
+
 librvg is an open-source C library for generating random variables.
 It released under the Apache-2.0 License.
 
@@ -30,10 +35,13 @@ guaranteed to exactly match that of the CDF. This generator is also
 guaranteed to be entropy optimal, in the sense that it consumes the least
 possible amount of random bits (on average) to produce a random bits.
 
+Documentation
+-------------
+
+Please visit https://probsys.github.io/librvg/
+
 Programming with librvg
 -----------------------
-
-Detailed descriptions of the librvg API can be found in [api.html](api.html).
 
 The following is a brief synopsis of how to get started with the main tasks
 supported by the library.
@@ -69,121 +77,3 @@ supported by the library.
   // Free the random number generator.
   gsl_rng_free(rng);
   }
-  ```
-
-The primary function provided by librvg is `generate_opt`, which takes as
-input a CDF implementation and a prng, and returns as output an exact
-random variate drawn from that CDF.
-
-A CDF F takes as input a double x and returns a float. It is valid if:
-
-  1. For all x, F(x) is a float in the unit interval [0, 1].
-  2. F(x) = 1, whenever x is NaN (i.e., if x != x).
-  3. F is monotonic, i.e., if x' < x then F(x') <= F(x).
-
-A CDF can be manually implemented as in the above example, or imported from the
-[GNU Scientific Library](https://www.gnu.org/software/gsl/doc/html/randist.html)
-(GSL), whose CDF functions are named `gsl_cdf_[dist]_P`.
-To use a GSL CDF in librvg, refer to examples/main.c.
-
-Given a CDF, librvg also provides an exact implementation of the corresponding
-[quantile function](https://en.wikipedia.org/wiki/Quantile_function) (QF),
-using `quantile` as shown in the above example.
-The quantile takes as input a CDF F and a float q in [0,1], and returns
-min{ x | q <= F(x) }. In words, it is the smallest number x' such that
-q <= Pr(X <= x').
-
-Installation
-------------
-
-This software is tested on Ubuntu 24.04. Other Linux distributions are also
-expected to work with minor modifications to the names of the dependencies.
-An alternative approach to installation is by using Docker, as described in
-the next section "Running via Docker".
-
-- Step 1: Install C dependencies:
-
-      $ sudo apt install build-essential libgsl-dev libgmp-dev
-
-- Step 2: Build the library:
-
-      $ make
-
-  The files are installed in
-    - `build/lib/librvg.a`  (static library)
-    - `build/include/*.h`   (header files)
-
-- Step 3: Run the examples
-
-      $ cd examples/
-      $ make
-      $ ./main.out
-      $ ./readme.out
-
-  To write new programs that use librvg.a, refer to examples/Makefile and
-  follow the same build process.
-
-Running Experiments
--------------------
-
-The experiments/ directory contains programs that produce Table 1, Table 2,
-and Figure 8 of [SL25]. Running the plotting code requires `python3` to be
-available in the path, with the pandas, numpy, and matplotlib libraries
-installed. The experiments take around 5-10 minutes each.
-
-- Table 1
-
-      $ cd experiments/
-      $ make table1
-
-  The output is `experiments/results.rate/table_1.txt`
-
-  These results shows the bits/variate, variates/sec for random
-  variate generation using three baselines (GSL, CBS, OPT)
-  on 24 probability distributions.
-
-- Table 2
-
-      $ cd experiments/
-      $ make table2
-
-  The outputs are the .png files in `experiments/results.bounds`
-
-  These results show the output random of random variates using four
-  generation methods (GSL, CDF, SF, DDF) for 13 probability distributions.
-  Each row in Table 2 corresponds to a specific png file. In each png file,
-  the runtimes are shown under the labels on the y-axis and the output
-  ranges are shown on the x-axis.
-
-- Figure 8
-
-      $ cd experiments/
-      $ make figure8
-
-  The output is `experiments/results.rate/figure_8.png`
-
-  These results show the ratios of bits/variate and variate/sec using
-  the basic and extended-accuracy variants of two methods (CBS, OPT).
-
-Running via Docker
-------------------
-
-Installing librvg and running the experiments can also be executed in a
-virtual Docker container.
-
-To build the container, first install Docker for your platform using
-the instructions at https://docs.docker.com/get-started/get-docker/.
-
-Step 1. Build the image and container.
-
-    $ docker build -f Dockerfile -t librvg .        # build image (~20 mins)
-    $ docker run -dit --name librvg librvg:latest   # create container
-
-Step 2. Extract the experiment results to the local filesytem.
-
-    $ docker cp librvg:/librvg librvg-build         # extract to ./librvg-build
-
-Step 3. (Optional) Launch an interactive terminal in the Docker container.
-
-    $ docker start librvg
-    $ docker attach librvg
