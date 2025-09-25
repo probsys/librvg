@@ -130,9 +130,9 @@ Querying a CDF
 --------------
 
 
-.. function:: double quantile(cdf32_t cdf, float q);
-              double quantile_sf(cdf32_t sf, float q);
-              double quantile_ext(ddf32_t ddf, bool d, float q);
+.. function:: double quantile(cdf32_t cdf, float q)
+              double quantile_sf(cdf32_t sf, float q)
+              double quantile_ext(ddf32_t ddf, bool d, float q)
 
   These functions are used to compute the exact quantiles of a CDF,
   SF, or DDF. Recall that the
@@ -168,9 +168,12 @@ Querying a CDF
 Pseudorandom Number Generators
 ------------------------------
 
-Available in :file:`prng.h`
+Available in :file:`prng.h` and :file:`flip.h`
 
-The generators described in :ref:`above <api:Generating Random Variates>`
+Flip States
+^^^^^^^^^^^
+
+The generators described :ref:`above <api:Generating Random Variates>`
 take as input a pseudorandom number generator called :data:`prng`, which
 must be obtained using :func:`make_flip_state`. The usual pattern is to
 make a flip state using a :data:`gsl_rng` pointer from the
@@ -183,10 +186,22 @@ as follows.
   gsl_rng * rng = gsl_rng_alloc(gsl_rng_default);
   struct flip_state prng = make_flip_state(rng);
 
+.. doxygenstruct:: flip_state
+
 .. doxygenfunction:: make_flip_state
 
-There are a large number of pseudorandom numbers in the GSL. librvg
-provides two additional PRNG types.
+Random bits are obtained from a :data:`flip_state` using the following
+functions.
+
+.. doxygenfunction:: flip
+.. doxygenfunction:: flip_k
+.. doxygenfunction:: randint
+
+Additional PRNGs
+^^^^^^^^^^^^^^^^
+
+There are a large number of pseudorandom numbers in the GSL, which can be
+used out of the box. librvg provides two additional PRNG types.
 
 .. var:: extern const gsl_rng_type * gsl_rng_urandom
 
