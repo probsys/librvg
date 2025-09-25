@@ -20,6 +20,9 @@ For the latest version, please visit https://github.com/probsys/librvg.
    - It may contain errors, inefficiencies, or incomplete features.
    - It has not been tested for production use or under real-world workloads.
 
+   | Users should take appropriate precautions when using this library.
+   | Please report questions and errors at https://github.com/probsys/librvg/issues/
+
 Purpose
 -------
 
