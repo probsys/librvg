@@ -1,7 +1,7 @@
 /*
   Name:     rate.c
   Purpose:  Analyzing the input and output rate of random variate generators.
-  Author:   F. Saad
+  Author:   F. A. Saad
   Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
 
   Released under Apache 2.0; refer to LICENSE.txt

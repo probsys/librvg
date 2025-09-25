@@ -1,8 +1,10 @@
-/**
-* @file         arithmetic.h
-* @brief        Fast integer arithmetic operations
-* @author       F. Saad
-* @copyright    Copyright 2025 CMU Probabilistic Computing Systems Lab
+/*
+  Name:     arithmetic.h
+  Purpose:  Fast integer arithmetic operations.
+  Author:   F. A. Saad
+  Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
+
+  Released under Apache 2.0; refer to LICENSE.txt
 */
 
 #ifndef ARITHMETIC_H

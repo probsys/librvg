@@ -1,7 +1,10 @@
-/**
-* @brief        GSL compatible random number generator from /dev/urandom
-* @author       F. Saad
-* @copyright    Copyright 2025 CMU Probabilistic Computing Systems Lab
+/*
+  Name:     urandom.c
+  Purpose:  GSL compatible random number generator from /dev/urandom
+  Author:   F. A. Saad
+  Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
+
+  Released under Apache 2.0; refer to LICENSE.txt
 */
 
 #include <assert.h>

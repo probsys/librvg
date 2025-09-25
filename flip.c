@@ -1,7 +1,10 @@
-/**
-* @brief        Generate a sequence of pseudo-random bits
-* @author       F. Saad
-* @copyright    Copyright 2025 CMU Probabilistic Computing Systems Lab
+/*
+  Name:     flip.c
+  Purpose:  Generate a sequence of pseudo-random bits.
+  Author:   F. A. Saad
+  Copyright (C) 2025 Feras A. Saad, All Rights Reserved.
+
+  Released under Apache 2.0; refer to LICENSE.txt
 */
 
 #include <assert.h>
