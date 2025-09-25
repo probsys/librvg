@@ -14,7 +14,7 @@
 #include <sys/random.h>
 #include <gsl/gsl_rng.h>
 
-#include "deterministic.h"
+#include "prng.h"
 
 /* This generator deterministically returns its state and does not evolve.
 

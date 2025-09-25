@@ -41,22 +41,22 @@ double generate_opt(cdf32_t cdf, struct flip_state * prng);
 /** Generate random variables optimally from `ddf`. */
 double generate_opt_ext(ddf32_t ddf, struct flip_state * prng);
 
-/** Compute the exact `q`-quantile of the `cdf`, where `q` must be in [0,1]. */
+/* Compute the exact `q`-quantile of the `cdf`, where `q` must be in [0,1]. */
 double quantile(cdf32_t cdf, float q);
 
-/** Compute the exact `q`-quantile of the `sf`, where `q` must be in [0,1]. */
+/* Compute the exact `q`-quantile of the `sf`, where `q` must be in [0,1]. */
 double quantile_sf(cdf32_t sf, float q);
 
-/** Compute the exact `q`-quantile of the `ddf`, where `q` must be in [0,1]. */
+/* Compute the exact `q`-quantile of the `ddf`, where `q` must be in [0,1]. */
 double quantile_ext(ddf32_t ddf, bool d, float q);
 
-/** Compute the exact lower `xlo` and upper `xhi` bound of `cdf`. */
+/* Compute the exact lower `xlo` and upper `xhi` bound of `cdf`. */
 void bounds_quantile(cdf32_t cdf, double * xlo, double * xhi);
 
-/** Compute the exact lower `xlo` and upper `xhi` bound of `sf`. */
+/* Compute the exact lower `xlo` and upper `xhi` bound of `sf`. */
 void bounds_quantile_sf(cdf32_t sf, double * xlo, double * xhi);
 
-/** Compute the exact lower `xlo` and upper `xhi` bound of `ddf`. */
+/* Compute the exact lower `xlo` and upper `xhi` bound of `ddf`. */
 void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi);
 
 /** Generate random variables from `cdf` using Conditional Bit Sampling. */

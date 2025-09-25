@@ -1,7 +1,13 @@
 API Reference
 =============
 
-The functions documented in this references are in :file:`generate.h`.
+The functions documented in this reference are in :file:`generate.h`.
+
+It will be helpful to recall our running example.
+
+.. literalinclude:: ../../examples/readme.c
+   :language: C
+   :linenos:
 
 Defining A Target Distribution
 ------------------------------
@@ -99,7 +105,10 @@ Generating Random Variates
 Entropy-Optimal Generation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-These generators are described in :cite:`saad2025pldi`.
+The generators are the entropy-optimal algorithms from :cite:`saad2025pldi`.
+They take as input the target :data:`cdf` as described in the
+:ref:`previous section <api:Defining a Target Distribution>` as well as a
+:data:`prng`, which is described in :ref:`api:Pseudorandom Number Generators`.
 
 .. doxygenfunction:: generate_opt
 .. doxygenfunction:: generate_opt_ext
@@ -107,9 +116,9 @@ These generators are described in :cite:`saad2025pldi`.
 Conditional-Bit Generation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-librvg also includes implementations of the Conditional Bit Sampling
-method. These functions are described in :cite:t:`Sobolewski1972{Section II}`.
-The performance of these methods is generally inferior to that of
+librvg also includes implementations of the Conditional Bit Sampling (CBS)
+method. These algorithms are described in :cite:t:`Sobolewski1972{Section II}`.
+The performance of these functions is generally inferior to that of
 :func:`generate_opt` and :func:`generate_opt_ext` in terms
 of entropy consumption and runtime, as they use arbitrary precision
 arithmetic via the `GNU MP Bignum Library <https://gmplib.org/>`_ (libgmp).
@@ -120,9 +129,79 @@ arithmetic via the `GNU MP Bignum Library <https://gmplib.org/>`_ (libgmp).
 Querying a CDF
 --------------
 
-.. doxygenfunction:: quantile
-.. doxygenfunction:: quantile_sf
-.. doxygenfunction:: quantile_ext
-.. doxygenfunction:: bounds_quantile
-.. doxygenfunction:: bounds_quantile_sf
-.. doxygenfunction:: bounds_quantile_ext
+
+.. function:: double quantile(cdf32_t cdf, float q);
+              double quantile_sf(cdf32_t sf, float q);
+              double quantile_ext(ddf32_t ddf, bool d, float q);
+
+  These functions are used to compute the exact quantiles of a CDF,
+  SF, or DDF. Recall that the
+  `quantile <https://en.wikipedia.org/wiki/Quantile>`_ :math:`Q`
+  of a cumulative distribution function :math:`F` is its is a generalized
+  inverse:
+
+  .. math::
+
+     \begin{aligned}
+     Q(u) = \inf\{ x \in \mathbb{R} \mid u \le F(x) \} && (u \in [0,1]).
+     \end{aligned}
+
+  For a numerical function :math:`\texttt{cdf}: \mathbb{F} \to \mathbb{F} \cap [0,1]`,
+  the exact quantile is
+
+  .. math::
+
+     \begin{aligned}
+     \texttt{quantile}(u) = \min\{ f \in \mathbb{F} \mid f \le \texttt{cdf}(x) \} && (u \in \mathbb{F} \cap [0,1]).
+     \end{aligned}
+
+
+.. function:: void bounds_quantile(cdf32_t cdf, double * xlo, double * xhi);
+              void bounds_quantile_sf(cdf32_t sf, double * xlo, double * xhi);
+              void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi);
+
+  These functions compute the values of the smallest and largest atoms of a
+  distribution. The results are stored in the output parameters :var:`xlo`
+  and :var:`xhi`.
+
+
+Pseudorandom Number Generators
+------------------------------
+
+Available in :file:`prng.h`
+
+The generators described in :ref:`above <api:Generating Random Variates>`
+take as input a pseudorandom number generator called :data:`prng`, which
+must be obtained using :func:`make_flip_state`. The usual pattern is to
+make a flip state using a :data:`gsl_rng` pointer from the
+`GNU Scientific Library <https://www.gnu.org/software/gsl/doc/html/rng.html>`__,
+as follows.
+
+.. code-block:: c
+
+  // Prepare the random number generator.
+  gsl_rng * rng = gsl_rng_alloc(gsl_rng_default);
+  struct flip_state prng = make_flip_state(rng);
+
+.. doxygenfunction:: make_flip_state
+
+There are a large number of pseudorandom numbers in the GSL. librvg
+provides two additional PRNG types.
+
+.. var:: extern const gsl_rng_type * gsl_rng_urandom
+
+  This generator draws system-level entropy
+  using the `getrandom <https://man7.org/linux/man-pages/man2/getrandom.2.html>`_
+  syscall, which is typically :file:`/dev/urandom`. It maintains no state
+  itself and cannot be seeded by the user, so calls such as
+  :code:`gsl_rng_set` have no effect. Used primarily for workflows that
+  require cryptographically secure random bits, see
+  :cite:`fois2023` for a detailed description of the system entropy
+  source.
+
+.. var:: extern const gsl_rng_type * gsl_rng_deterministic
+
+  This generator deterministically returns its seed. Its state consists of
+  a single `unsigned long int` value (typically 32 bits) which is always
+  returned. It is very useful for debugging and characterizing the
+  properties of generators.

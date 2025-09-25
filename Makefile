@@ -1,8 +1,8 @@
 all: build
 
 FILES.h = $(wildcard *.h)
-FILES.c = ${FILES.h:.h=.c}
-FILES.o = ${FILES.h:.h=.o}
+FILES.c = $(wildcard *=.c)
+FILES.o = ${FILES.c:.c=.o}
 
 LIBS = -lgsl -lgmp -lm
 

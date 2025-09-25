@@ -38,7 +38,7 @@ distribution of the random variates, the generators are equipped with a
 precise guarantee on their output distributions. This feature can be
 contrasted with existing C libraries for random variate generation:
 
-   `GNU Scientific Library <https://www.gnu.org/software/gsl/doc/html/index.html>`_ (GSL).
+   `GNU Scientific Library <https://www.gnu.org/software/gsl/doc/html/index.html>`__ (GSL).
    This library provides CDF/SF implementations of various probability
    distributions as well as separate implementation of generators for
    these distributions. In general, there is no precise relationship

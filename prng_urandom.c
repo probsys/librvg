@@ -14,7 +14,7 @@
 #include <sys/random.h>
 #include <gsl/gsl_rng.h>
 
-#include "urandom.h"
+#include "prng.h"
 
 /* This generator is a lightweight wrapper over getrandom(2).
 
