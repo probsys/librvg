@@ -1,7 +1,4 @@
 Bibliography
 ============
 
-Running Experiments
--------------------
-
 .. bibliography::
