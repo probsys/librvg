@@ -2,7 +2,7 @@ Overview
 ========
 
 librvg is an open-source C library for generating random variables.
-It released under the Apache-2.0 License.
+It is released under the Apache-2.0 License.
 The methods implemented in librvg are described in the following
 publication.
 
@@ -20,8 +20,8 @@ For the latest version, please visit https://github.com/probsys/librvg.
    - It may contain errors, inefficiencies, or incomplete features.
    - It has not been tested for production use or under real-world workloads.
 
-   | Users should take appropriate precautions when using this library.
-   | Please report questions and errors at https://github.com/probsys/librvg/issues/
+   Users should take appropriate precautions when using this library.
+   Please report questions and errors at https://github.com/probsys/librvg/issues/
 
 Purpose
 -------
@@ -52,17 +52,17 @@ contrasted with existing C libraries for random variate generation:
    However, it does not guarantee exact samples.
 
 The exact and automated algorithms in librvg generally operate more slowly
-than the approximate algorithms from the above libraries. This library is
-most suitable for situations where rigorous guarantees are needed on the
-exact output distribution and runtime characteristics of the generator. It
-is also suitable when the entropy (or amount of randomness) consumed by the
-algorithm is an important resource to be minimized; see
+than more specialized, approximate algorithms from the above libraries.
+This library is most suitable for situations where rigorous guarantees are
+needed on the exact output distribution and runtime characteristics of the
+generator. It is also suitable when the entropy (or amount of randomness)
+consumed by the algorithm is an important resource to be minimized; see
 :ref:`overview:Optimality`.
 
 Guarantees
 ----------
 
-The algorithms in librvg guarantee exact coherence the specified CDF (or SF)
+The algorithms in librvg cohere with the specified CDF (or SF)
 interpreted as a floating-point function. In particular, given a numerical
 implementation
 :math:`\texttt{cdf}: \mathbb{F} \to \mathbb{F} \cap [0,1]` of a CDF that
@@ -85,12 +85,12 @@ is given instead, then the guarantee is
    \Pr(X > f) = \texttt{sf}(f) && (f \in \mathbb{F}).
    \end{aligned}
 
-An advanced feature of librvg is the notion of a *dual distribution function*
-(DDF), which combines a CDF and SF to obtain a much
-more accurate representation of the target distribution than can be achieved
-using either a CDF or SF in isolation. The DDF addresses the limitation
-of floating-point numbers, which are very dense close to 0 but sparse
-close to 1. Informally, the property that a DDF guarantees is
+An advanced feature of librvg is the notion of a *dual distribution
+function* (DDF), which combines a CDF and SF to obtain a more accurate
+representation of the target distribution than can be achieved using either
+a CDF or SF in isolation. The DDF addresses the limitation of
+floating-point probabilities, which are very dense near 0 but sparse near
+1. Informally, the property that a DDF guarantees is
 
 .. math::
 
@@ -126,7 +126,7 @@ more detailed information the functions.
    :language: C
    :linenos:
 
-The primary function provided by librvg is ``generate_opt``, which takes as
+The primary function provided by librvg is :func:`generate_opt``, which takes as
 input a CDF implementation and a pseudorandom number generator (prng),
 and returns as output an exact random variate drawn from that CDF.
 

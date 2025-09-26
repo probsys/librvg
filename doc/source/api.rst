@@ -12,8 +12,8 @@ It will be helpful to recall our running example.
 Defining A Target Distribution
 ------------------------------
 
-To generate random variates, librvg operates using numerical specifications
-of cumulative distribution functions (CDF) and survival functions (SF).
+To generate random variates, librvg requires a specification of the target
+as a cumulative distribution function (CDF) and/or survival function (SF).
 These functions must adhere to the following type.
 
 .. type:: float (*cdf32_t)(double x);
@@ -200,8 +200,10 @@ functions.
 Additional PRNGs
 ^^^^^^^^^^^^^^^^
 
-There are a large number of pseudorandom numbers in the GSL, which can be
-used out of the box. librvg provides two additional PRNG types.
+There are a large number of
+`pseudorandom number generators in the GSL <https://www.gnu.org/software/gsl/doc/html/rng.html>`_,
+which can be used out of the box. librvg also provides two additional PRNG
+types.
 
 .. var:: extern const gsl_rng_type * gsl_rng_urandom
 
@@ -217,6 +219,6 @@ used out of the box. librvg provides two additional PRNG types.
 .. var:: extern const gsl_rng_type * gsl_rng_deterministic
 
   This generator deterministically returns its seed. Its state consists of
-  a single `unsigned long int` value (typically 32 bits) which is always
-  returned. It is very useful for debugging and characterizing the
+  a single :data:`unsigned long int` value (typically 32 bits) which is
+  always returned. It is useful for debugging and characterizing the
   properties of generators.

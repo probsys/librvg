@@ -7,7 +7,7 @@ librvg: C Library for Random Variate Generation with Formal Guarantees
 [![License](https://img.shields.io/github/license/probsys/librvg?color=lightgrey)](https://github.com/probsys/librvg/blob/main/LICENSE.txt)
 
 librvg is an open-source C library for generating random variables.
-It released under the Apache-2.0 License.
+It is released under the Apache-2.0 License.
 
 The methods implemented in librvg are described in the following
 publication.
