@@ -1,5 +1,0 @@
-"gsl_ran_fdist(rng, nu1, nu2)" 100000 0.227519 26895040
-"generate_opt" 100000 1.509113 2500099
-"generate_cbs" 100000 3.397363 5134047
-"generate_opt_ext" 100000 1.541907 2599064
-"generate_cbs_ext" 100000 5.710046 5443119

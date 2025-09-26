@@ -1,5 +1,0 @@
-"gsl_ran_pascal(rng, p, N)" 100000 0.168771 19559296
-"generate_opt" 100000 0.079673 0
-"generate_cbs" 100000 0.090644 0
-"generate_opt_ext" 100000 0.117336 0
-"generate_cbs_ext" 100000 0.121880 0

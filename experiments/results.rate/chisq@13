@@ -1,5 +1,0 @@
-"gsl_ran_cauchy(rng, a)" 100000 0.078173 6400000
-"generate_opt" 100000 2.051774 2500240
-"generate_cbs" 100000 3.787937 4740537
-"generate_opt_ext" 100000 1.992652 2599923
-"generate_cbs_ext" 100000 5.890919 5116103

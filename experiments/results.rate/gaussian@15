@@ -1,5 +1,0 @@
-"gsl_ran_gaussian(rng, sigma)" 100000 0.167127 16273280
-"generate_opt" 100000 0.423079 2500103
-"generate_cbs" 100000 2.030585 4637111
-"generate_opt_ext" 100000 0.423686 2599752
-"generate_cbs_ext" 100000 4.066444 4813965

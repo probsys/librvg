@@ -1,5 +1,0 @@
-"gsl_ran_hypergeometric(rng, n1, n2 ,t)" 100000 0.351986 44799296
-"generate_opt" 100000 0.708429 303196
-"generate_cbs" 100000 0.886453 620117
-"generate_opt_ext" 100000 0.725290 301821
-"generate_cbs_ext" 100000 1.161852 620116

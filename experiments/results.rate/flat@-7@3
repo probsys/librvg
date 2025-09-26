@@ -1,5 +1,0 @@
-"gsl_ran_flat(rng, a, b)" 100000 0.088810 6400000
-"generate_opt" 100000 0.208269 2500051
-"generate_cbs" 100000 1.722977 4369161
-"generate_opt_ext" 100000 0.228710 2598789
-"generate_cbs_ext" 100000 4.117841 4626365

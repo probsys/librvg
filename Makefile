@@ -32,16 +32,6 @@ build: librvg.a ${FILES.h}
 	mkdir -p build/lib
 	cp librvg.a build/lib
 
-librvg.tar.gz: \
-		Makefile Dockerfile LICENSE \
-		readme.md api.md api.md.in \
-		readme.html api.html tools/ \
-		${FILES.h} ${FILES.c} \
-		experiments/Makefile experiments/*.c \
-		experiments/results.bounds experiments/results.rate \
-		examples/Makefile examples/*.c
-	tar -c -f $@ -z -- $^
-
 .PHONY: clean
 clean:
 	rm -rf \

@@ -1,5 +1,0 @@
-"gsl_ran_gamma(rng, a, b)" 100000 0.247895 19826176
-"generate_opt" 100000 5.228019 2499858
-"generate_cbs" 100000 7.173660 5704881
-"generate_opt_ext" 100000 5.159170 2600430
-"generate_cbs_ext" 100000 9.860446 5881658
