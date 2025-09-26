@@ -1,13 +1,9 @@
 API Reference
 =============
 
-The functions documented in this reference are in :file:`generate.h`.
-
-It will be helpful to review the following running example.
-
-.. literalinclude:: ../../examples/readme.c
-   :language: C
-   :linenos:
+The functions documented in this reference are primarily in
+:file:`generate.h`. It will be helpful to review the main
+:ref:`example:Example` for an overview of the interface.
 
 Defining A Target Distribution
 ------------------------------

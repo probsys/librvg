@@ -6,6 +6,7 @@ librvg: Library for Random Variate Generation
 
    overview.rst
    installation.rst
+   example.rst
    api.rst
    experiments.rst
    bibliography.rst

@@ -129,13 +129,3 @@ more detailed information the functions.
 The primary function provided by librvg is :func:`generate_opt`, which takes as
 input a CDF implementation and a pseudorandom number generator (prng),
 and returns as output an exact random variate drawn from that CDF.
-
-A CDF can be manually implemented as in the above example, or imported from the
-`GSL randist module <https://www.gnu.org/software/gsl/doc/html/randist.html>`_.
-The CDF functions are named ``gsl_cdf_[dist]_P``.
-The following program contains examples of how to wrap a GSL distribution
-for use with librvg.
-
-.. literalinclude:: ../../examples/main.c
-   :language: C
-   :linenos:
