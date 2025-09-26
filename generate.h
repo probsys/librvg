@@ -74,7 +74,7 @@ double generate_cbs_ext(ddf32_t ddf, struct flip_state * prng);
 
 /** Make a cumulative distribution over doubles from the GSL. */
 #define MAKE_CDF_P(name, func, ...) MAKE_CDF_GENERAL(name, func, 1., ##__VA_ARGS__)
-/** Make a cumulative distribution over doubles from the GSL. */
+/** Make a survival distribution over doubles from the GSL. */
 #define MAKE_CDF_Q(name, func, ...) MAKE_CDF_GENERAL(name, func, 0., ##__VA_ARGS__)
 
 /* Distribution over unsigned integers. */

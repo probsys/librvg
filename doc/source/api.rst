@@ -3,7 +3,7 @@ API Reference
 
 The functions documented in this reference are in :file:`generate.h`.
 
-It will be helpful to recall our running example.
+It will be helpful to review the following running example.
 
 .. literalinclude:: ../../examples/readme.c
    :language: C
@@ -78,12 +78,30 @@ Wrapping a Distribution
 
 librvg can interporate with existing CDF or SF implementations from the
 `GNU Scientific Library <https://www.gnu.org/software/gsl/doc/html/randist.html>`_.
+The following examples show how to wrap a Normal(0,1) and Poisson(5)
+distributions to create new functions that are compatible with
+with :type:`cdf32_t` and :type:`ddf32_t`.
+
+.. code-block:: c
+
+    // Gaussian distribution from the GNU library (continuous).
+    MAKE_CDF_P(gaussian_cdf, gsl_cdf_gaussian_P, 1);
+    MAKE_CDF_Q(gaussian_sf, gsl_cdf_gaussian_Q, 1);
+    MAKE_DDF(gaussian_ddf, gaussian_cdf, gaussian_sf);
+
+    // EXAMPLE 2: Poisson distribution from the GNU library (discrete).
+    MAKE_CDF_UINT_P(poisson_cdf, gsl_cdf_poisson_P, 5);
+    MAKE_CDF_UINT_Q(poisson_sf, gsl_cdf_poisson_Q, 5);
+    MAKE_DDF(poisson_ddf, poisson_cdf, poisson_sf);
+
+
 The following macros are available, where
 :data:`name` should be a fresh C identifier (not a string)
 for the name of the new function created from :data:`func`. The suffixes
 ``_P`` and ``_Q`` correspond to a CDF and SF, respectively, a naming
 convention inherited from the GSL. The ``...`` varargs are passed
-directly to :data:`func`.
+directly to :data:`func`. The :func:`MAKE_DDF` macro is not specific to a
+CDF or SF created from the GSL, it can be used for any such pairing.
 
 .. doxygendefine:: MAKE_CDF_P
 .. doxygendefine:: MAKE_CDF_Q
@@ -91,13 +109,13 @@ directly to :data:`func`.
 .. doxygendefine:: MAKE_CDF_UINT_Q
 .. doxygendefine:: MAKE_DDF
 
-The :func:`MAKE_DDF` macro is not specific to a CDF or SF created from the
-GSL, it can be used for any such pairing.
+.. function:: float cdf_discrete(double x, const float *P, size_t K);
 
-The following function from :file:`discrete.h` wraps an array of cumulative
-probabilities into function of type :type:`cdf32_t`.
-
-.. doxygenfunction:: cdf_discrete
+    A cumulative distribution function (:type:`cdf32_t`) for arbitrary
+    discrete distributions over nonnegative integers. It is parameterized
+    by a length-:data:`K` input array :data:`P` of cumulative
+    probabilities, where ``P[i]`` is the cumulative probability of
+    integer ``i``. Available in :file:`discrete.h`.
 
 Generating Random Variates
 --------------------------
@@ -219,6 +237,6 @@ types.
 .. var:: extern const gsl_rng_type * gsl_rng_deterministic
 
   This generator deterministically returns its seed. Its state consists of
-  a single :data:`unsigned long int` value (typically 32 bits) which is
+  a single ``unsigned long int`` value (typically 32 bits) which is
   always returned. It is useful for debugging and characterizing the
   properties of generators.

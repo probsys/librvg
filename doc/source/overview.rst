@@ -126,7 +126,7 @@ more detailed information the functions.
    :language: C
    :linenos:
 
-The primary function provided by librvg is :func:`generate_opt``, which takes as
+The primary function provided by librvg is :func:`generate_opt`, which takes as
 input a CDF implementation and a pseudorandom number generator (prng),
 and returns as output an exact random variate drawn from that CDF.
 

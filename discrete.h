@@ -10,9 +10,6 @@
 
 #include <stddef.h>
 
-/** CDF function wrapper for an array `P` of floats (representing
- * cumulative probabilities). `K` is the length of `P` and `x` is the
- * outcome, i.e., `P[x]` when `x` is an integer `[0, K)`.*/
+/* Wrap array of cumulative probabilities into a CDF. */
 float cdf_discrete(double x, const float *P, size_t K);
-
 #endif
