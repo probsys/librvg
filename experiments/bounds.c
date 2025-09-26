@@ -12,7 +12,7 @@
 #include <gsl/gsl_randist.h>
 
 #include "rvg/generate.h"
-#include "rvg/deterministic.h"
+#include "rvg/prng.h"
 
 int main(int argc, char * argv[]) {
 

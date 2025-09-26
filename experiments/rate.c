@@ -22,8 +22,7 @@
 
 #include "rvg/discrete.h"
 #include "rvg/generate.h"
-#include "rvg/urandom.h"
-#include "rvg/deterministic.h"
+#include "rvg/prng.h"
 
 #include "gsl_wrap.h"
 

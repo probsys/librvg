@@ -79,8 +79,7 @@ int main (int argc, char *argv[]) {
     // WRITE THE C FILE.
     f = fopen("gsl_wrap.c", "w");
     fprintf(f, "#include <gsl/gsl_rng.h>\n");
-    fprintf(f, "#include \"rvg/urandom.h\"\n");
-    fprintf(f, "#include \"rvg/deterministic.h\"\n\n");
+    fprintf(f, "#include \"rvg/prng.h\"\n");
     // GSL types.
     const gsl_rng_type **t, **t0 = gsl_rng_types_setup();
     for (t = t0; *t != 0; t++) {
