@@ -57,7 +57,7 @@ double int2double(uint64_t i);
 
 // Convert bit string in sign-magnitude system to lexicographic system.
 uint32_t bij32_sm2lex(uint32_t b);
-uint32_t bij32_sm2lex(uint32_t b);
+uint32_t bij32_lex2sm(uint32_t b);
 // Convert bit string in float system to lexicographic system.
 uint32_t bij32_float2lex(uint32_t b);
 uint32_t bij32_lex2float(uint32_t b);
