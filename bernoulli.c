@@ -214,9 +214,11 @@ void uniformf_ext(
         case 0:
             *q = nextafterf(ans.f, 1.);
             assert((0 <= *q) & (*q <= 0.5));
+            break;
         case 1:
             *q = ans.f;
             assert((0 <= *q) & (*q < 0.5));
+            break;
     }
 }
 
@@ -240,8 +242,10 @@ void uniform_ext(
         case 0:
             *q = nextafter(ans.f, 1.);
             assert((0 <= *q) & (*q <= 0.5));
+            break;
         case 1:
             *q = ans.f;
             assert((0 <= *q) & (*q < 0.5));
+            break;
     }
 }
