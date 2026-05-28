@@ -103,7 +103,7 @@ double generate_cbs(cdf32_t cdf, struct flip_state * prng) {
 
         // Compute CDF at midpoint.
         unsigned int m = DBL_SIZE - (l + 1);
-        uint64_t b_lex = (b << m + 1) + (1ull << m) - 1;
+        uint64_t b_lex = (b << (m + 1)) + (1ull << m) - 1;
         uint64_t b_flt = bij64_lex2float(b_lex);
         double d = int2double(b_flt);
         float cdf_m = cdf(d);
@@ -197,7 +197,7 @@ double generate_cbs_ext(ddf32_t ddf, struct flip_state * prng) {
     for (int l = 0; l < DBL_SIZE; l++) {
         // Compute CDF at midpoint.
         unsigned int m = DBL_SIZE - (l + 1);             // m = n_max - (len(b)+1)
-        uint64_t b_lex = (b << m + 1) + (1ull << m) - 1; // b+'0' + '1'*m
+        uint64_t b_lex = (b << (m + 1)) + (1ull << m) - 1; // b+'0' + '1'*m
         uint64_t b_flt = bij64_lex2float(b_lex);
         double d = int2double(b_flt);
         bool d_m; float cdf_m;
@@ -299,7 +299,7 @@ double generate_opt(cdf32_t cdf, struct flip_state * prng) {
 
         // Compute CDF at midpoint.
         unsigned int m = DBL_SIZE - (l + 1);             // m = n_max - (len(b)+1)
-        uint64_t b_lex = (b << m + 1) + (1ull << m) - 1; // b+'0' + '1'*m
+        uint64_t b_lex = (b << (m + 1)) + (1ull << m) - 1; // b+'0' + '1'*m
         uint64_t b_flt = bij64_lex2float(b_lex);
         double d = int2double(b_flt);
         float cdf_m = cdf(d);
@@ -404,7 +404,7 @@ double generate_opt_ext(ddf32_t ddf, struct flip_state * prng) {
 
         // Compute CDF at midpoint.
         unsigned int m = DBL_SIZE - (l + 1);             // m = n_max - (len(b)+1)
-        uint64_t b_lex = (b << m + 1) + (1ull << m) - 1; // b+'0' + '1'*m
+        uint64_t b_lex = (b << (m + 1)) + (1ull << m) - 1; // b+'0' + '1'*m
         uint64_t b_flt = bij64_lex2float(b_lex);
         double d = int2double(b_flt);
         bool d_m; float cdf_m;

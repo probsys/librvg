@@ -186,9 +186,9 @@ unsigned char ith_bit_of_exact(struct subtract_exact_s * ss, uint32_t l) {
 
 bool check_ddf_val(bool d, float q) {
     return
-        (d == 0) && (0 <= q) && (q <= 0.5)
+        ((d == 0) && (0 <= q) && (q <= 0.5))
         ||
-        (d == 1) && (0 <= q) && (q < 0.5);
+        ((d == 1) && (0 <= q) && (q < 0.5));
 }
 
 bool compare_lte_ext(bool d0, float q0, bool d1, float q1) {

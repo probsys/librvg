@@ -32,7 +32,7 @@ double int2double(uint64_t i) {
 uint32_t bij32_sm2lex(uint32_t b) {
     // size_t width = CHAR_BIT * sizeof(b);
     // assert(width == 32);
-    unsigned char c = (b >> FLT_SIZE - 1) & 1;
+    unsigned char c = (b >> (FLT_SIZE - 1)) & 1;
     if (c == 0) {
         // Flip MSB: 0x80000000 = 2^31
         return b ^ 0x80000000;
@@ -44,7 +44,7 @@ uint32_t bij32_sm2lex(uint32_t b) {
 uint32_t bij32_lex2sm(uint32_t b) {
     // size_t width = CHAR_BIT * sizeof(b);
     // assert(width == 32);
-    unsigned char c = (b >> FLT_SIZE - 1) & 1;
+    unsigned char c = (b >> (FLT_SIZE - 1)) & 1;
     if (c == 0) {
         return ~b;
     } else {
@@ -78,7 +78,7 @@ uint32_t bij32_float2lex(uint32_t b) {
 uint64_t bij64_sm2lex(uint64_t b) {
     // size_t width = CHAR_BIT * sizeof(b);
     // assert(width == 64);
-    unsigned char c = (b >> DBL_SIZE - 1) & 1;
+    unsigned char c = (b >> (DBL_SIZE - 1)) & 1;
     if (c == 0) {
         // Flip MSB: 0x8000000000000000 = 2^63
         return b ^ 0x8000000000000000;
@@ -90,7 +90,7 @@ uint64_t bij64_sm2lex(uint64_t b) {
 uint64_t bij64_lex2sm(uint64_t b) {
     // size_t width = CHAR_BIT * sizeof(b);
     // assert(width == 64);
-    unsigned char c = (b >> DBL_SIZE - 1) & 1;
+    unsigned char c = (b >> (DBL_SIZE - 1)) & 1;
     if (c == 0) {
         return ~b;
     } else {
