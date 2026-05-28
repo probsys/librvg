@@ -5,10 +5,11 @@
   Copyright (C) 2025 CMU Probabilistic Computing Systems Lab
 */
 
-#include <assert.h>
-#include <limits.h>
+#include <errno.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/random.h>
 #include <gsl/gsl_rng.h>
 
@@ -28,11 +29,17 @@ typedef struct {
 
 static inline unsigned long int
 urandom_get (void *vstate) {
-    size_t num_bytes = 64 / CHAR_BIT;
-    unsigned char buffer[num_bytes];
-    assert(num_bytes == sizeof(buffer));
-    size_t code = getrandom(buffer, sizeof(buffer), 0);
-    assert(code ==  num_bytes);
+    unsigned char buffer[sizeof(uint64_t)];
+    size_t offset = 0;
+    while (offset < sizeof(buffer)) {
+        ssize_t nread = getrandom(buffer + offset, sizeof(buffer) - offset, 0);
+        if (nread == -1) {
+            if (errno == EINTR) { continue; }
+            abort();
+        }
+        if (nread == 0) { abort(); }
+        offset += (size_t)nread;
+    }
     uint64_t value = 0;
     memcpy(&value, buffer, sizeof(buffer));
     return value;
