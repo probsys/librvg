@@ -239,13 +239,8 @@ double generate_cbs_ext(ddf32_t ddf, struct flip_state * prng) {
         }
 
         // Compute p(b1)/p(b)
-        mpq_t cdf_w;   mpq_init(cdf_w);
-        mpq_t cdf_w1;  mpq_init(cdf_w1);
         subtract_gmp_ext(cdf_w, d_r, cdf_r, d_l, cdf_l);
         subtract_gmp_ext(cdf_w1, d_r, cdf_r, d_m, cdf_m);
-        mpq_t r; mpq_init(r);
-        mpz_t k; mpz_init(k);
-        mpz_t n; mpz_init(n);
         mpq_div(r, cdf_w1, cdf_w);
         mpq_get_num(k, r);
         mpq_get_den(n, r);
