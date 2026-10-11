@@ -23,6 +23,8 @@ typedef double (*cdf64_t)(double x);
 
 // 32-bit dual distribution function. It takes as input a double `x`,
 // pointers to boolean `b` and float `p` that are modified with result.
+// If `x` is NaN, it must set `*b = 1` and `*p = 0`, i.e., probability 1, in
+// the same way that a `cdf32_t` must return 1 at NaN.
 // The 64-bit version is unused.
 typedef void (*ddf32_t)(double x, bool * b, float * p);
 typedef void (*ddf64_t)(double x, bool * b , double * p);

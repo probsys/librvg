@@ -67,6 +67,11 @@ The type of a DDF is given in as
 
     - If :data:`b` is set to 1, then :math:`\Pr(X \le x) = 1 - p`
 
+    As with a CDF, a DDF must satisfy :math:`\Pr(X \le x) = 1` whenever
+    :data:`x` is NaN (i.e., if ``x != x``). That is, it must set :data:`b`
+    to 1 and :data:`p` to 0. A DDF made using :func:`MAKE_DDF` from a CDF
+    and SF that satisfy the above properties has this behavior automatically.
+
 Functions that operate using a DDF have an ``_ext`` suffix (meaning "extended").
 
 Wrapping a Distribution
