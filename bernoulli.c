@@ -175,7 +175,7 @@ float uniformf(enum round_mode mode, struct flip_state * prng) {
     ans.b.sign = 0;
     ans.b.exponent = exp;
     ans.b.mantissa = mant;
-    return (mode == RND_U) ? nextafter(ans.f, 1.) : ans.f;
+    return (mode == RND_U) ? nextafterf(ans.f, 1.) : ans.f;
 }
 
 double uniform(enum round_mode mode, struct flip_state * prng) {
