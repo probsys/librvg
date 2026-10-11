@@ -493,6 +493,7 @@ double generate_opt_ext(ddf32_t ddf, struct flip_state * prng) {
 
 double quantile(cdf32_t cdf, float q) {
     assert((0 <= q) && (q <= 1));
+    assert(cdf(NAN) == 1);      // The search requires F(NaN) = 1.
     uint64_t lo = 0;
     uint64_t hi = 0xffffffffffffffff;
     union double_bits mid;
@@ -518,6 +519,7 @@ double quantile(cdf32_t cdf, float q) {
 
 double quantile_sf(cdf32_t sf, float q) {
     assert((0 < q) && (q <= 1));
+    assert(sf(NAN) == 0);       // The search requires S(NaN) = 0.
     uint64_t lo = 0;
     uint64_t hi = 0xffffffffffffffff;
     union double_bits mid;
@@ -543,6 +545,14 @@ double quantile_sf(cdf32_t sf, float q) {
 
 double quantile_ext(ddf32_t ddf, bool d, float q) {
     assert(check_ddf_val(d, q));
+    #ifndef NDEBUG
+    {
+        // The search requires the DDF to give probability 1 at NaN.
+        bool d_nan; float q_nan;
+        ddf(NAN, &d_nan, &q_nan);
+        assert((d_nan == 1) && (q_nan == 0));
+    }
+    #endif
     uint64_t lo = 0;
     uint64_t hi = 0xffffffffffffffff;
     union double_bits mid;
