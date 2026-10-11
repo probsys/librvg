@@ -25,27 +25,32 @@ extern const int DBL_SIZE;
 #define DBL_SIZE_E 11
 #define DBL_SIZE_M 52
 
-// Extract fields of float.
+// Extract fields of float and double.
+#if defined(__BYTE_ORDER__) && (__BYTE_ORDER__ != __ORDER_LITTLE_ENDIAN__)
+#error "bits.h: field order assumes little-endian bit-field allocation"
+#endif
+
 union float_bits {
   float f;
   uint32_t i;
   struct {
-    unsigned long mantissa  : FLT_SIZE_M;   // long 32
-    unsigned int  exponent  : FLT_SIZE_E;   // int 16
-    unsigned char sign      : FLT_SIZE_S;   // char 8
+    unsigned int mantissa : FLT_SIZE_M;
+    unsigned int exponent : FLT_SIZE_E;
+    unsigned int sign     : FLT_SIZE_S;
   } b;
 };
+_Static_assert(sizeof(union float_bits) == 4, "float_bits is not 32 bits");
 
-// Extract fields of double.
 union double_bits {
   double f;
   uint64_t i;
   struct {
-    uint64_t      mantissa : DBL_SIZE_M;   // uint64_t 64
-    unsigned int  exponent : DBL_SIZE_E;   // int 16
-    unsigned char sign     : DBL_SIZE_S;   // char 8
+    uint64_t mantissa : DBL_SIZE_M;
+    uint64_t exponent : DBL_SIZE_E;
+    uint64_t sign     : DBL_SIZE_S;
   } b;
 };
+_Static_assert(sizeof(union double_bits) == 8, "double_bits is not 64 bits");
 
 // Convert floats to and from unsigned integers.
 uint32_t float2int(float f);
