@@ -1,6 +1,6 @@
 all: main.out readme.out
 
-LIBS = -lrvg $(shell gsl-config --libs-without-cblas)
+LIBS = -lrvg $(shell gsl-config --libs-without-cblas) -lgmp
 INCLUDES = -I ../build/include -L ../build/lib/
 CFLAGS = -O3 -DNDEBUG -Wl,-z,execstack $(shell gsl-config --cflags)
 

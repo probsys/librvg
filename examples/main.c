@@ -18,10 +18,16 @@ int main(int argc, char * argv[]) {
     MAKE_DDF(gaussian_ddf, gaussian_cdf, gaussian_sf);
 
     sample = generate_opt(gaussian_cdf, &prng);
-    printf("%f\n", sample);
+    printf("OPT GAUS CDF\t%f\n", sample);
 
     sample = generate_opt_ext(gaussian_ddf, &prng);
-    printf("%f\n", sample);
+    printf("OPT GAUS DDF\t%f\n", sample);
+
+    sample = generate_inversion(gaussian_cdf, &prng);
+    printf("INV GAUS CDF\t%f\n", sample);
+
+    sample = generate_inversion_ext(gaussian_ddf, &prng);
+    printf("INV GAUS DDF\t%f\n", sample);
 
     // EXAMPLE 2: Poisson distribution from the GNU library (discrete).
     MAKE_CDF_UINT_P(poisson_cdf, gsl_cdf_poisson_P, 5);
@@ -29,16 +35,24 @@ int main(int argc, char * argv[]) {
     MAKE_DDF(poisson_ddf, poisson_cdf, poisson_sf);
 
     sample = generate_opt(poisson_cdf, &prng);
-    printf("%f\n", sample);
+    printf("OPT POIS CDF\t%f\n", sample);
 
     sample = generate_opt_ext(poisson_ddf, &prng);
-    printf("%f\n", sample);
+    printf("OPT POIS DDF\t%f\n", sample);
+
+    sample = generate_inversion(poisson_cdf, &prng);
+    printf("INV POIS CDF\t%f\n", sample);
+
+    sample = generate_inversion_ext(poisson_ddf, &prng);
+    printf("INV POIS DDF\t%f\n", sample);
 
     // EXAMPLE 3: A custom discrete distribution.
     float P[4] = {0.1, 0.3, 0.5, 0.8};
     MAKE_CDF_UINT_P(custom_discrete_cdf, cdf_discrete, P, 4);
     sample = generate_opt(custom_discrete_cdf, &prng);
-    printf("%f\n", sample);
+    printf("OPT DISCRETE\t%f\n", sample);
+    sample = generate_inversion(custom_discrete_cdf, &prng);
+    printf("INV DISCRETE\t%f\n", sample);
 
     // EXAMPLE 4: A custom continuous distribution, F(x) = x^2 over [0,1].
     float custom_continuous_cdf(double x) {
@@ -47,13 +61,15 @@ int main(int argc, char * argv[]) {
         else if (1 <= x)        { return 1; }
         else                    { return x*x; }
     }
-    printf("%f\n", generate_opt(custom_continuous_cdf, &prng));
+    printf("OPT X^2\t\t%f\n", generate_opt(custom_continuous_cdf, &prng));
+    printf("INV X^2\t\t%f\n", generate_inversion(custom_continuous_cdf, &prng));
 
     // EXAMPLE 5: A custom CDF that is a point mass at NaN.
     float custom_delta_cdf(double x) {
         return (x != x) ? 1. : 0.;
     }
-    printf("%f\n", generate_opt(custom_delta_cdf, &prng));
+    printf("OPT DELTA\t%f\n", generate_opt(custom_delta_cdf, &prng));
+    printf("INV DELTA\t%f\n", generate_inversion(custom_delta_cdf, &prng));
 
     // Free the random number generator.
     gsl_rng_free(rng);
