@@ -145,6 +145,20 @@ arithmetic via the `GNU MP Bignum Library <https://gmplib.org/>`_ (libgmp).
 .. doxygenfunction:: generate_cbs
 .. doxygenfunction:: generate_cbs_ext
 
+Inverse-Transform Method
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+librvg also includes exact generators based on the
+`inversion method <https://en.wikipedia.org/wiki/Inverse_transform_sampling>`_.
+These functions draw a uniform random number in the unit interval, rounded
+to a float :data:`q`, and return the exact :data:`q`-quantile of the
+target, as computed by :func:`quantile` and :func:`quantile_ext` (see
+:ref:`api:Querying a CDF`). The :func:`generate_inversion_ext` function draws
+:data:`q` in a dual representation, to retain precision near 1.
+
+.. doxygenfunction:: generate_inversion
+.. doxygenfunction:: generate_inversion_ext
+
 Querying a CDF
 --------------
 

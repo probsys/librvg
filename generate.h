@@ -59,6 +59,15 @@ void bounds_quantile_sf(cdf32_t sf, double * xlo, double * xhi);
 /* Compute the exact lower `xlo` and upper `xhi` bound of `ddf`. */
 void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi);
 
+/** Generate random variables from `cdf` using the inversion method. */
+double generate_inversion(cdf32_t cdf, struct flip_state * prng);
+
+/* Generate random variables from `sf` using the inversion method. */
+double generate_inversion_sf(cdf32_t sf, struct flip_state * prng);
+
+/** Generate random variables from `ddf` using the inversion method. */
+double generate_inversion_ext(ddf32_t ddf, struct flip_state * prng);
+
 /** Generate random variables from `cdf` using Conditional Bit Sampling. */
 double generate_cbs(cdf32_t cdf, struct flip_state * prng);
 

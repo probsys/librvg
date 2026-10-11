@@ -591,3 +591,21 @@ void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi) {
     *xlo = quantile_ext(ddf, 0, nextafterf(0, 1.));
     *xhi = quantile_ext(ddf, 1, 0);
 }
+
+// ================ Inversion Sampling ================
+
+double generate_inversion(cdf32_t cdf, struct flip_state * prng) {
+    float u = uniformf(RND_U, prng);
+    return quantile(cdf, u);
+}
+
+double generate_inversion_sf(cdf32_t sf, struct flip_state * prng) {
+    float u = uniformf(RND_D, prng);
+    return quantile_sf(sf, u);
+}
+
+double generate_inversion_ext(ddf32_t ddf, struct flip_state * prng) {
+    bool d; float q;
+    uniformf_ext(&d, &q, prng);
+    return quantile_ext(ddf, d, q);
+}
