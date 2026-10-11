@@ -44,8 +44,8 @@ These functions must adhere to the following type.
       can be achieved as follows.
 
         - Atom at ``-INFINITY``: let ``F(-INFINITY) > 0``.
-        - Atom at ``-INFINITY``: let ``F(nextafterf(INFINITY, 0)) < F(INFINITY)``.
-        - Atom at ``NAN``: let ``F(-INFINITY) < 1``.
+        - Atom at ``INFINITY``: let ``F(nextafterf(INFINITY, 0)) < F(INFINITY)``.
+        - Atom at ``NAN``: let ``F(INFINITY) < 1``.
 
       It is also possible to specify separate atoms at the negative
       and positive zeros (``0+``, ``0-``) of floating-point.
