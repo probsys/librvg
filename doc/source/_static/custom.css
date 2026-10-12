@@ -1,0 +1,12 @@
+/* Make :src: links look like the sphinx_rtd_theme inline literal used by :file: */
+.rst-content a.extlink-src {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", Courier, monospace;
+    font-size: 75%;
+    padding: 2px 5px;
+    color: #e74c3c;
+    background: #fff;
+    border: 1px solid #e1e4e5;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow-x: auto;
+}

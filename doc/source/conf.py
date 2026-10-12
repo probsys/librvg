@@ -13,7 +13,7 @@ release                 = '0.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions              = ['breathe', 'sphinxcontrib.bibtex', 'sphinx.ext.autosectionlabel']
+extensions              = ['breathe', 'sphinxcontrib.bibtex', 'sphinx.ext.autosectionlabel', 'sphinx.ext.extlinks']
 breathe_projects        = { 'librvg': '../build/dox/xml' }
 breathe_default_project = 'librvg'
 breathe_show_include    = True
@@ -33,6 +33,8 @@ bibtex_default_style    = 'alpha'
 bibtex_reference_style  = 'label'
 
 autosectionlabel_prefix_document = True
+
+extlinks                = {'src': ('https://github.com/probsys/librvg/blob/master/%s', '%s')}
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

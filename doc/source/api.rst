@@ -1,9 +1,11 @@
 API Reference
 =============
 
-The functions documented in this reference are primarily in
-:file:`generate.h`. It will be helpful to review the main
-:ref:`example:Example` for an overview of the interface.
+The functions documented in this reference are in
+:src:`generate.h`, unless otherwise stated.
+
+It will be helpful to review the main :ref:`example:Example` for an
+overview of the interface.
 
 Defining A Target Distribution
 ------------------------------
@@ -112,11 +114,13 @@ CDF or SF created from the GSL, it can be used for any such pairing.
 
 .. function:: float cdf_discrete(double x, const float *P, size_t K);
 
+    Available in :src:`discrete.h`.
+
     A cumulative distribution function (:type:`cdf32_t`) for arbitrary
     discrete distributions over nonnegative integers. It is parameterized
     by a length-:data:`K` input array :data:`P` of cumulative
     probabilities, where ``P[i]`` is the cumulative probability of
-    integer ``i``. Available in :file:`discrete.h`.
+    integer ``i``.
 
 Generating Random Variates
 --------------------------
@@ -201,7 +205,7 @@ Querying a CDF
 Uniform Generation
 ------------------
 
-Available in :file:`bernoulli.h`
+Available in :src:`bernoulli.h`
 
 Generating Floats
 ^^^^^^^^^^^^^^^^^
@@ -258,7 +262,7 @@ distribution function representations (see :ref:`overview:Guarantees`).
 Pseudorandom Number Generators
 ------------------------------
 
-Available in :file:`prng.h` and :file:`flip.h`
+Available in :src:`prng.h` and :src:`flip.h`
 
 Flip States
 ^^^^^^^^^^^
