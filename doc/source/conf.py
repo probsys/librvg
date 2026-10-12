@@ -30,7 +30,7 @@ exclude_patterns        = []
 
 bibtex_bibfiles         = ['references.bib']
 bibtex_default_style    = 'alpha'
-bibtex_reference_style  = 'label'
+bibtex_reference_style  = 'author_year'
 
 autosectionlabel_prefix_document = True
 
