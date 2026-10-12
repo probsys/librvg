@@ -23,6 +23,8 @@ typedef double (*cdf64_t)(double x);
 
 // 32-bit dual distribution function. It takes as input a double `x`,
 // pointers to boolean `b` and float `p` that are modified with result.
+// If `x` is NaN, it must set `*b = 1` and `*p = 0`, i.e., probability 1, in
+// the same way that a `cdf32_t` must return 1 at NaN.
 // The 64-bit version is unused.
 typedef void (*ddf32_t)(double x, bool * b, float * p);
 typedef void (*ddf64_t)(double x, bool * b , double * p);
@@ -56,6 +58,15 @@ void bounds_quantile_sf(cdf32_t sf, double * xlo, double * xhi);
 
 /* Compute the exact lower `xlo` and upper `xhi` bound of `ddf`. */
 void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi);
+
+/** Generate random variables from `cdf` using the inversion method. */
+double generate_inversion(cdf32_t cdf, struct flip_state * prng);
+
+/* Generate random variables from `sf` using the inversion method. */
+double generate_inversion_sf(cdf32_t sf, struct flip_state * prng);
+
+/** Generate random variables from `ddf` using the inversion method. */
+double generate_inversion_ext(ddf32_t ddf, struct flip_state * prng);
 
 /** Generate random variables from `cdf` using Conditional Bit Sampling. */
 double generate_cbs(cdf32_t cdf, struct flip_state * prng);

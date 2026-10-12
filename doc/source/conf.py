@@ -17,6 +17,7 @@ extensions              = ['breathe', 'sphinxcontrib.bibtex', 'sphinx.ext.autose
 breathe_projects        = { 'librvg': '../build/dox/xml' }
 breathe_default_project = 'librvg'
 breathe_show_include    = True
+breathe_domain_by_extension = {'h': 'c', 'c': 'c'}
 
 master_doc              = 'index'
 primary_domain          = 'c'

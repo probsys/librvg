@@ -493,6 +493,7 @@ double generate_opt_ext(ddf32_t ddf, struct flip_state * prng) {
 
 double quantile(cdf32_t cdf, float q) {
     assert((0 <= q) && (q <= 1));
+    assert(cdf(NAN) == 1);      // The search requires F(NaN) = 1.
     uint64_t lo = 0;
     uint64_t hi = 0xffffffffffffffff;
     union double_bits mid;
@@ -518,6 +519,7 @@ double quantile(cdf32_t cdf, float q) {
 
 double quantile_sf(cdf32_t sf, float q) {
     assert((0 < q) && (q <= 1));
+    assert(sf(NAN) == 0);       // The search requires S(NaN) = 0.
     uint64_t lo = 0;
     uint64_t hi = 0xffffffffffffffff;
     union double_bits mid;
@@ -543,6 +545,14 @@ double quantile_sf(cdf32_t sf, float q) {
 
 double quantile_ext(ddf32_t ddf, bool d, float q) {
     assert(check_ddf_val(d, q));
+    #ifndef NDEBUG
+    {
+        // The search requires the DDF to give probability 1 at NaN.
+        bool d_nan; float q_nan;
+        ddf(NAN, &d_nan, &q_nan);
+        assert((d_nan == 1) && (q_nan == 0));
+    }
+    #endif
     uint64_t lo = 0;
     uint64_t hi = 0xffffffffffffffff;
     union double_bits mid;
@@ -580,4 +590,22 @@ void bounds_quantile_sf(cdf32_t sf, double * xlo, double * xhi){
 void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi) {
     *xlo = quantile_ext(ddf, 0, nextafterf(0, 1.));
     *xhi = quantile_ext(ddf, 1, 0);
+}
+
+// ================ Inversion Sampling ================
+
+double generate_inversion(cdf32_t cdf, struct flip_state * prng) {
+    float u = uniformf(RND_U, prng);
+    return quantile(cdf, u);
+}
+
+double generate_inversion_sf(cdf32_t sf, struct flip_state * prng) {
+    float u = uniformf(RND_D, prng);
+    return quantile_sf(sf, u);
+}
+
+double generate_inversion_ext(ddf32_t ddf, struct flip_state * prng) {
+    bool d; float q;
+    uniformf_ext(&d, &q, prng);
+    return quantile_ext(ddf, d, q);
 }

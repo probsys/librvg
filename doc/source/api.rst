@@ -67,6 +67,11 @@ The type of a DDF is given in as
 
     - If :data:`b` is set to 1, then :math:`\Pr(X \le x) = 1 - p`
 
+    As with a CDF, a DDF must satisfy :math:`\Pr(X \le x) = 1` whenever
+    :data:`x` is NaN (i.e., if ``x != x``). That is, it must set :data:`b`
+    to 1 and :data:`p` to 0. A DDF made using :func:`MAKE_DDF` from a CDF
+    and SF that satisfy the above properties has this behavior automatically.
+
 Functions that operate using a DDF have an ``_ext`` suffix (meaning "extended").
 
 Wrapping a Distribution
@@ -140,6 +145,20 @@ arithmetic via the `GNU MP Bignum Library <https://gmplib.org/>`_ (libgmp).
 .. doxygenfunction:: generate_cbs
 .. doxygenfunction:: generate_cbs_ext
 
+Inverse-Transform Method
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+librvg also includes exact generators based on the
+`inversion method <https://en.wikipedia.org/wiki/Inverse_transform_sampling>`_.
+These functions draw a uniform random number in the unit interval, rounded
+to a float :data:`q`, and return the exact :data:`q`-quantile of the
+target, as computed by :func:`quantile` and :func:`quantile_ext` (see
+:ref:`api:Querying a CDF`). The :func:`generate_inversion_ext` function draws
+:data:`q` in a dual representation, to retain precision near 1.
+
+.. doxygenfunction:: generate_inversion
+.. doxygenfunction:: generate_inversion_ext
+
 Querying a CDF
 --------------
 
@@ -151,7 +170,7 @@ Querying a CDF
   These functions are used to compute the exact quantiles of a CDF,
   SF, or DDF. Recall that the
   `quantile <https://en.wikipedia.org/wiki/Quantile>`_ :math:`Q`
-  of a cumulative distribution function :math:`F` is its is a generalized
+  of a cumulative distribution function :math:`F` is its generalized
   inverse:
 
   .. math::
@@ -177,6 +196,63 @@ Querying a CDF
   These functions compute the values of the smallest and largest atoms of a
   distribution. The results are stored in the output parameters :var:`xlo`
   and :var:`xhi`.
+
+
+Uniform Generation
+------------------
+
+Available in :file:`bernoulli.h`
+
+Generating Floats
+^^^^^^^^^^^^^^^^^
+
+These functions generate a uniform number in the unit interval ``[0,1]``,
+according to the following process:
+
+  .. math::
+
+     \begin{aligned}
+     U' &\sim \mathrm{Uniform}_{\mathbb{R}}(0,1) \\
+     U &\gets \mathrm{round}_{\mathbb{F}, \alpha}(U')
+     \end{aligned}
+
+where the variable :math:`U'` is an infinitely precise uniform real
+and :math:`\mathrm{round}_{\mathbb{F}, \alpha}` is a rounding function
+that converts a real number in :math:`\mathbb{R}` to a floating-point
+number in :math:`\mathbb{F}`, according to a rounding mode :math:`\alpha`
+(round up, round down, round to nearest).
+
+.. doxygenenum:: round_mode
+
+.. doxygenfunction:: uniformf
+.. doxygenfunction:: uniform
+
+
+Generating Dual Floats
+^^^^^^^^^^^^^^^^^^^^^^
+
+When performing inversion sampling using :func:`generate_inversion_ext`, it
+is necessary to use a dual representation of floats that mirrors the dual
+distribution function representations (see :ref:`overview:Guarantees`).
+
+.. function:: void uniformf_ext(bool * d, float * q, struct flip_state * prng)
+              void uniform_ext(bool * d, double * q, struct flip_state * prng)
+
+  These functions simulate a uniform real number in the dual distribution
+  format. The algorithm is as follows
+
+  .. math::
+
+     \begin{aligned}
+     D &\sim \mathrm{Bernoulli}(1/2) \\
+     \alpha &\gets D = 0 \quad ? \quad \texttt{RND_U} : \texttt{RND_D} \\
+     U' &\sim \mathrm{Uniform}_{\mathbb{R}}(0,1/2) \\
+     U &\gets \mathrm{round}_{\mathbb{F}, \alpha}(U')
+     \end{aligned}
+
+  The result of the sample is stored in :var:`d` and :var:`q`.
+  Here ``d=0`` means that the sample is ``q`` and ``d=1`` means that the
+  sample is ``1 - q`` where the subtraction is in exact (real) arithmetic.
 
 
 Pseudorandom Number Generators
