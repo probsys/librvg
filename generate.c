@@ -600,7 +600,7 @@ double generate_inversion(cdf32_t cdf, struct flip_state * prng) {
 }
 
 double generate_inversion_sf(cdf32_t sf, struct flip_state * prng) {
-    float u = uniformf(RND_D, prng);
+    float u = uniformf(RND_U, prng);
     return quantile_sf(sf, u);
 }
 
