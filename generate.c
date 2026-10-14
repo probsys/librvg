@@ -493,88 +493,68 @@ double generate_opt_ext(ddf32_t ddf, struct flip_state * prng) {
 
 double quantile(cdf32_t cdf, float q) {
     assert((0 <= q) && (q <= 1));
-    assert(cdf(NAN) == 1);      // The search requires F(NaN) = 1.
+    assert(cdf(NAN) == 1);      // The library assumes F(NaN) = 1.
     uint64_t lo = 0;
-    uint64_t hi = 0xffffffffffffffff;
+    uint64_t hi = UINT64_MAX;
     union double_bits mid;
-    double x;
-    int iter = 0;
-    while (1) {
-        iter++;
-        uint64_t m = lo/2 + hi/2;
-        mid.i = bij64_lex2float(m);
-        float cdf_mid = cdf(mid.f);
-        if (q <= cdf_mid) {
-            x = mid.f;
-            if (hi == lo) { break; }
-            hi = m - 1;
+    while (lo < hi) {
+        uint64_t i = lo + (hi - lo) / 2;
+        mid.i = bij64_lex2float(i);
+        if (q <= cdf(mid.f)) {
+            hi = i;
         } else {
-            if (lo == hi) { break; }
-            lo = m + 1;
+            lo = i + 1;
         }
     }
-    assert(iter == 64);
-    return x;
+    mid.i = bij64_lex2float(lo);
+    return mid.f;
 }
 
 double quantile_sf(cdf32_t sf, float q) {
     assert((0 < q) && (q <= 1));
-    assert(sf(NAN) == 0);       // The search requires S(NaN) = 0.
+    assert(sf(NAN) == 0);       // The library assumes S(NaN) = 0.
     uint64_t lo = 0;
-    uint64_t hi = 0xffffffffffffffff;
+    uint64_t hi = UINT64_MAX;
     union double_bits mid;
-    double x;
-    int iter = 0;
-    while (1) {
-        iter++;
-        uint64_t m = lo/2 + hi/2;
-        mid.i = bij64_lex2float(m);
-        float sf_mid = sf(mid.f);
-        if (sf_mid < q) {
-            x = mid.f;
-            if (hi == lo) { break; }
-            hi = m - 1;
+    while (lo < hi) {
+        uint64_t i = lo + (hi - lo) / 2;
+        mid.i = bij64_lex2float(i);
+        if (sf(mid.f) < q) {
+            hi = i;
         } else {
-            if (lo == hi) { break; }
-            lo = m + 1;
+            lo = i + 1;
         }
     }
-    assert(iter == 64);
-    return x;
+    mid.i = bij64_lex2float(lo);
+    return mid.f;
 }
 
 double quantile_ext(ddf32_t ddf, bool d, float q) {
     assert(check_ddf_val(d, q));
     #ifndef NDEBUG
     {
-        // The search requires the DDF to give probability 1 at NaN.
+        // The library assumes the DDF gives probability 1 at NaN.
         bool d_nan; float q_nan;
         ddf(NAN, &d_nan, &q_nan);
         assert((d_nan == 1) && (q_nan == 0));
     }
     #endif
     uint64_t lo = 0;
-    uint64_t hi = 0xffffffffffffffff;
+    uint64_t hi = UINT64_MAX;
     union double_bits mid;
     bool d_mid; float cdf_mid;
-    double x;
-    int iter = 0;
-    while (1) {
-        iter++;
-        uint64_t m = lo/2 + hi/2;
-        mid.i = bij64_lex2float(m);
+    while (lo < hi) {
+        uint64_t i = lo + (hi - lo) / 2;
+        mid.i = bij64_lex2float(i);
         ddf(mid.f, &d_mid, &cdf_mid);
         if (compare_lte_ext(d, q, d_mid, cdf_mid)) {
-            x = mid.f;
-            if (hi == lo) { break; }
-            hi = m - 1;
+            hi = i;
         } else {
-            if (lo == hi) { break; }
-            lo = m + 1;
+            lo = i + 1;
         }
     }
-    assert(iter == 64);
-    return x;
+    mid.i = bij64_lex2float(lo);
+    return mid.f;
 }
 
 void bounds_quantile(cdf32_t cdf, double * xlo, double * xhi){

@@ -44,7 +44,7 @@ double generate_opt_ext(ddf32_t ddf, struct flip_state * prng);
 /* Compute the exact `q`-quantile of the `cdf`, where `q` must be in [0,1]. */
 double quantile(cdf32_t cdf, float q);
 
-/* Compute the exact `q`-quantile of the `sf`, where `q` must be in [0,1]. */
+/* Compute the exact `q`-quantile of the `sf`, where `q` must be in (0,1]. */
 double quantile_sf(cdf32_t sf, float q);
 
 /* Compute the exact `q`-quantile of the `ddf`, where `q` must be in [0,1]. */
