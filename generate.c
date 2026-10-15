@@ -378,6 +378,15 @@ double generate_opt(cdf32_t cdf, struct flip_state * prng) {
         }
     }
 
+    #ifndef NDEBUG
+    mpq_clear(kn0);
+    mpq_clear(kn1);
+    mpz_clear(k0);
+    mpz_clear(n0);
+    mpz_clear(k1);
+    mpz_clear(n1);
+    #endif
+
     b = bij64_lex2float(b);
     return int2double(b);
 }
@@ -483,6 +492,15 @@ double generate_opt_ext(ddf32_t ddf, struct flip_state * prng) {
             }
         }
     }
+
+    #ifndef NDEBUG
+    mpq_clear(kn0);
+    mpq_clear(kn1);
+    mpz_clear(k0);
+    mpz_clear(n0);
+    mpz_clear(k1);
+    mpz_clear(n1);
+    #endif
 
     b = bij64_lex2float(b);
     return int2double(b);
