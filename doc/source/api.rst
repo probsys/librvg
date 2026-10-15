@@ -249,7 +249,7 @@ distribution function representations (see :ref:`overview:Guarantees`).
 
      \begin{aligned}
      D &\sim \mathrm{Bernoulli}(1/2) \\
-     \alpha &\gets D = 0 \quad ? \quad \texttt{RND_U} : \texttt{RND_D} \\
+     \alpha &\gets D = 0 \;\, ? \;\, \texttt{RND\_U} : \texttt{RND\_D} \\
      U' &\sim \mathrm{Uniform}_{\mathbb{R}}(0,1/2) \\
      U &\gets \mathrm{round}_{\mathbb{F}, \alpha}(U')
      \end{aligned}
