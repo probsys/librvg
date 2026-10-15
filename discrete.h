@@ -1,8 +1,8 @@
 /*
-  Name:     flip.h
-  Purpose:  Generate a sequence of pseudo-random bits.
-  Author:   F. Saad
-  Copyright (C) 2024 Feras A. Saad.
+  SPDX-License-Identifier: Apache-2.0
+  Copyright (C) 2025 CMU Probabilistic Computing Systems Laboratory
+
+  Cumulative distribution function from an array of cumulative probabilities.
 */
 
 #ifndef DISCRETE_H

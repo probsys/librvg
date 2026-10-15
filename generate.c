@@ -1,8 +1,6 @@
 /*
-  Name:     generate.c
-  Purpose:  Generate a random variate.
-  Author:   F. Saad
-  Copyright (C) 2025 CMU Probabilistic Computing Systems Lab
+  SPDX-License-Identifier: Apache-2.0
+  Copyright (C) 2025 CMU Probabilistic Computing Systems Laboratory
 */
 
 #include <assert.h>

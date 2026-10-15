@@ -1,8 +1,8 @@
 /*
-  Name:     bits.h
-  Purpose:  Operations on binary representations.
-  Author:   F. Saad
-  Copyright (C) 2025 CMU Probabilistic Computing Systems Lab
+  SPDX-License-Identifier: Apache-2.0
+  Copyright (C) 2025 CMU Probabilistic Computing Systems Laboratory
+
+  Operations on binary representations.
 */
 
 #ifndef BITS_H

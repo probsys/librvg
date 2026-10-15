@@ -1,8 +1,8 @@
 /*
-  Name:     prng.h
-  Purpose:  GSL compatible random number generators.
-  Author:   F. Saad
-  Copyright (C) 2025 CMU Probabilistic Computing Systems Lab
+  SPDX-License-Identifier: Apache-2.0
+  Copyright (C) 2025 CMU Probabilistic Computing Systems Laboratory
+
+  GSL compatible random number generators.
 */
 
 #ifndef PRNG_H

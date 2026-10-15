@@ -6,8 +6,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project                 = 'librvg'
-copyright               = '2025, Probabilistic Computing Systems Laboratory'
-author                  = 'Probabilistic Computing Systems Laboratory'
+copyright               = '2025, CMU Probabilistic Computing Systems Laboratory'
+author                  = 'CMU Probabilistic Computing Systems Laboratory'
 release                 = '0.1'
 
 # -- General configuration ---------------------------------------------------

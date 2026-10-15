@@ -1,8 +1,8 @@
 /*
-  Name:     urandom.c
-  Purpose:  GSL compatible random number generator from /dev/urandom
-  Author:   F. Saad
-  Copyright (C) 2025 CMU Probabilistic Computing Systems Lab
+  SPDX-License-Identifier: Apache-2.0
+  Copyright (C) 2025 CMU Probabilistic Computing Systems Laboratory
+
+  GSL compatible random number generator from /dev/urandom source.
 */
 
 #include <errno.h>

@@ -1,8 +1,8 @@
 /*
-  Name:     arithmetic.h
-  Purpose:  Fast integer arithmetic operations.
-  Author:   F. Saad
-  Copyright (C) 2025 CMU Probabilistic Computing Systems Lab
+  SPDX-License-Identifier: Apache-2.0
+  Copyright (C) 2025 CMU Probabilistic Computing Systems Laboratory
+
+  Fast integer arithmetic operations.
 */
 
 #ifndef ARITHMETIC_H
