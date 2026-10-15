@@ -1,3 +1,7 @@
+/* Make visited links same as standard links. */
+:where(.rst-content) a:visited       { color: #2980b9; }
+:where(.rst-content) a:visited:hover { color: #3091d1; }
+
 /* Make :src: links look like the sphinx_rtd_theme inline literal used by :file: */
 .rst-content a.extlink-src {
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", Courier, monospace;
