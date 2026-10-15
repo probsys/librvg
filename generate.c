@@ -11,6 +11,7 @@
 #include "flip.h"
 #include "arithmetic.h"
 #include "bernoulli.h"
+#include "uniform.h"
 #include "generate.h"
 
 void cdf64_interval(

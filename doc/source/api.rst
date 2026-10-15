@@ -228,7 +228,7 @@ Querying a CDF
 Uniform Generation
 ------------------
 
-Available in :src:`bernoulli.h`
+Available in :src:`uniform.h`
 
 Generating Floats
 ^^^^^^^^^^^^^^^^^
