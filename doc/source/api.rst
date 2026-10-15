@@ -11,8 +11,8 @@ Defining A Target Distribution
 ------------------------------
 
 To generate random variates, librvg requires a specification of the target
-as a cumulative distribution function (CDF) and/or survival function (SF).
-These functions must adhere to the following type.
+as a cumulative distribution function (CDF), a survival function (SF), or
+both. Functions that compute a CDF or SF must adhere to the following type.
 
 .. type:: float (*cdf32_t)(double x);
 
@@ -52,11 +52,32 @@ These functions must adhere to the following type.
       It is also possible to specify separate atoms at the negative
       and positive zeros (``0+``, ``0-``) of floating-point.
 
+Accurate Sampling in the Right Tail
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 An advanced feature of librvg is the notion of a "dual distribution
-function" (DDF), which combines a numerical CDF and SF to enable extended
-accuracy sampling. This representation is described in the
-:ref:`overview:Guarantees` and in :cite:p:`saad2025pldi{§6}`.
-The type of a DDF is given in as
+function" (DDF), which enables extended accuracy sampling in the upper tail
+of a distribution.
+
+Recall that floating-point probabilities are dense near 0 but sparse
+near 1. For example, a 32-bit CDF with ``F(x) < 1`` has ``F(x) <= 1 - 2^-24``, so it cannot
+represent an upper-tail probability ``Pr(X > x)`` that lies strictly between 0
+and ``2^-24``. A DDF solves this limitation. It can be built in two ways, and
+both give full floating-point precision in the upper tail:
+
+- From a CDF and an SF, using :func:`MAKE_DDF`. The result is also precise in
+  the lower tail, as the CDF is used up to its median and the SF above it.
+
+- From an SF alone, using :func:`MAKE_DDF_SF`. The lower half of the
+  distribution is then only as precise as ``1 - S(x)``, i.e., probabilities
+  at most 1/2 are multiples of ``2^-24``.
+
+A CDF alone is already precise in the lower tail, and can be used directly
+with the generators that do not have an ``_ext`` suffix. This
+representation is further described in the :ref:`overview:Guarantees` and
+in :cite:p:`saad2025pldi{§6}`.
+
+The type of a DDF is given in as follows.
 
 .. type:: void (*ddf32_t)(double x, bool * b, float * p);
 
@@ -72,11 +93,12 @@ The type of a DDF is given in as
     As with a CDF, a DDF must satisfy :math:`\Pr(X \le x) = 1` whenever
     :data:`x` is NaN (i.e., if ``x != x``). That is, it must set :data:`b`
     to 1 and :data:`p` to 0. A DDF made using :func:`MAKE_DDF` from a CDF
-    and SF that satisfy the above properties has this behavior automatically.
+    and SF, or using :func:`MAKE_DDF_SF` from an SF, that satisfy the above
+    properties has this behavior automatically.
 
 Functions that operate using a DDF have an ``_ext`` suffix (meaning "extended").
 
-Wrapping a Distribution
+Using GSL Distributions
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 librvg can interporate with existing CDF or SF implementations from the
@@ -104,13 +126,16 @@ for the name of the new function created from :data:`func`. The suffixes
 ``_P`` and ``_Q`` correspond to a CDF and SF, respectively, a naming
 convention inherited from the GSL. The ``...`` varargs are passed
 directly to :data:`func`. The :func:`MAKE_DDF` macro is not specific to a
-CDF or SF created from the GSL, it can be used for any such pairing.
+CDF or SF created from the GSL, it can be used for any such pairing. The
+:func:`MAKE_DDF_SF` macro creates a DDF from an SF alone, for a target that
+is specified only by its survival function.
 
 .. doxygendefine:: MAKE_CDF_P
 .. doxygendefine:: MAKE_CDF_Q
 .. doxygendefine:: MAKE_CDF_UINT_P
 .. doxygendefine:: MAKE_CDF_UINT_Q
 .. doxygendefine:: MAKE_DDF
+.. doxygendefine:: MAKE_DDF_SF
 
 .. function:: float cdf_discrete(double x, const float *P, size_t K);
 
@@ -168,11 +193,10 @@ Querying a CDF
 
 
 .. function:: double quantile(cdf32_t cdf, float q)
-              double quantile_sf(cdf32_t sf, float q)
               double quantile_ext(ddf32_t ddf, bool d, float q)
 
-  These functions are used to compute the exact quantiles of a CDF,
-  SF, or DDF. Recall that the
+  These functions are used to compute the exact quantiles of a CDF
+  or DDF. Recall that the
   `quantile <https://en.wikipedia.org/wiki/Quantile>`_ :math:`Q`
   of a cumulative distribution function :math:`F` is its generalized
   inverse:
@@ -194,7 +218,6 @@ Querying a CDF
 
 
 .. function:: void bounds_quantile(cdf32_t cdf, double * xlo, double * xhi);
-              void bounds_quantile_sf(cdf32_t sf, double * xlo, double * xhi);
               void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi);
 
   These functions compute the values of the smallest and largest atoms of a

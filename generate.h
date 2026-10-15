@@ -44,26 +44,17 @@ double generate_opt_ext(ddf32_t ddf, struct flip_state * prng);
 /* Compute the exact `q`-quantile of the `cdf`, where `q` must be in [0,1]. */
 double quantile(cdf32_t cdf, float q);
 
-/* Compute the exact `q`-quantile of the `sf`, where `q` must be in (0,1]. */
-double quantile_sf(cdf32_t sf, float q);
-
 /* Compute the exact `q`-quantile of the `ddf`, where `q` must be in [0,1]. */
 double quantile_ext(ddf32_t ddf, bool d, float q);
 
 /* Compute the exact lower `xlo` and upper `xhi` bound of `cdf`. */
 void bounds_quantile(cdf32_t cdf, double * xlo, double * xhi);
 
-/* Compute the exact lower `xlo` and upper `xhi` bound of `sf`. */
-void bounds_quantile_sf(cdf32_t sf, double * xlo, double * xhi);
-
 /* Compute the exact lower `xlo` and upper `xhi` bound of `ddf`. */
 void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi);
 
 /** Generate random variables from `cdf` using the inversion method. */
 double generate_inversion(cdf32_t cdf, struct flip_state * prng);
-
-/* Generate random variables from `sf` using the inversion method. */
-double generate_inversion_sf(cdf32_t sf, struct flip_state * prng);
 
 /** Generate random variables from `ddf` using the inversion method. */
 double generate_inversion_ext(ddf32_t ddf, struct flip_state * prng);
@@ -102,7 +93,7 @@ double generate_cbs_ext(ddf32_t ddf, struct flip_state * prng);
 /** Make a survival distribution over unsigned integers from the GSL. */
 #define MAKE_CDF_UINT_Q(name, func, ...) MAKE_CDF_UINT_GENERAL(name, func, 0., ##__VA_ARGS__)
 
-/** Make a dual distribution function. */
+/** Make a dual distribution function from a CDF and SF. */
 #define MAKE_DDF(name, func_cdf, func_sf)                                \
     const double name##__cutoff = quantile(func_cdf, nextafterf(.5, 1)); \
     const bool name##__sign = signbit(name##__cutoff);        \
@@ -128,6 +119,20 @@ double generate_cbs_ext(ddf32_t ddf, struct flip_state * prng);
         } else {                                             \
             *d = 1;                                          \
             *q = func_sf(x);                                 \
+        }                                                    \
+        assert(check_ddf_val(*d, *q));                       \
+     }
+
+/** Make a dual distribution function from only a SF. */
+#define MAKE_DDF_SF(name, func_sf)                           \
+    void name(double x, bool * d, float * q) {               \
+        float s__ = func_sf(x);                              \
+        if (s__ < 0.5f) {                                    \
+            *d = 1;                                          \
+            *q = s__;                                        \
+        } else {                                             \
+            *d = 0;                                          \
+            *q = 1.f - s__;                                  \
         }                                                    \
         assert(check_ddf_val(*d, *q));                       \
      }

@@ -86,11 +86,15 @@ is given instead, then the guarantee is
    \end{aligned}
 
 An advanced feature of librvg is the notion of a *dual distribution
-function* (DDF), which combines a CDF and SF to obtain a more accurate
-representation of the target distribution than can be achieved using either
-a CDF or SF in isolation. The DDF addresses the limitation of
-floating-point probabilities, which are very dense near 0 but sparse near
-1. Informally, the property that a DDF guarantees is
+function* (DDF), which obtains a more accurate representation of the target
+distribution than can be achieved using a CDF or SF in isolation.
+
+The DDF addresses the limitation of floating-point probabilities, which are
+very dense near 0 but sparse near 1, by retaining high precision in the
+upper tail. A DDF can be built from a CDF and an SF, in which case it is
+precise in both tails, or from an SF alone, in which case it is precise in
+the upper tail. Informally, the property that a DDF built from a CDF and SF
+guarantees is
 
 .. math::
 
@@ -103,9 +107,11 @@ floating-point probabilities, which are very dense near 0 but sparse near
    \end{aligned}
 
 where :math:`f^*` is a cutoff-point corresponding to the exact
-floating-point median of :math:`cdf`; and the subtraction in the second
-case is (i.e., not subject to floating-point error). Additional details of
-this representation are available in :cite:p:`saad2025pldi{§6}`.
+floating-point median of :math:`\texttt{cdf}`; and the subtraction in the second
+case is *exact* (i.e., not subject to floating-point error).
+
+Additional details of this representation are available in
+:cite:p:`saad2025pldi{§6}`.
 
 Optimality
 ----------
@@ -126,6 +132,7 @@ more detailed information the functions.
    :language: C
    :linenos:
 
-The primary function provided by librvg is :func:`generate_opt`, which takes as
-input a CDF implementation and a pseudorandom number generator (prng),
-and returns as output an exact random variate drawn from that CDF.
+The main functions provided by librvg are of the form ``generate_*``, which
+take as input a CDF or DDF implementation and a pseudorandom number
+generator (prng), and returns as output an exact random variate drawn from
+the specified distribution.

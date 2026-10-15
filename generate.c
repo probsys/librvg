@@ -510,25 +510,6 @@ double quantile(cdf32_t cdf, float q) {
     return mid.f;
 }
 
-double quantile_sf(cdf32_t sf, float q) {
-    assert((0 < q) && (q <= 1));
-    assert(sf(NAN) == 0);       // The library assumes S(NaN) = 0.
-    uint64_t lo = 0;
-    uint64_t hi = UINT64_MAX;
-    union double_bits mid;
-    while (lo < hi) {
-        uint64_t i = lo + (hi - lo) / 2;
-        mid.i = bij64_lex2float(i);
-        if (sf(mid.f) < q) {
-            hi = i;
-        } else {
-            lo = i + 1;
-        }
-    }
-    mid.i = bij64_lex2float(lo);
-    return mid.f;
-}
-
 double quantile_ext(ddf32_t ddf, bool d, float q) {
     assert(check_ddf_val(d, q));
     #ifndef NDEBUG
@@ -562,11 +543,6 @@ void bounds_quantile(cdf32_t cdf, double * xlo, double * xhi){
     *xhi = quantile(cdf, 1);
 }
 
-void bounds_quantile_sf(cdf32_t sf, double * xlo, double * xhi){
-    *xlo = quantile_sf(sf, 1);
-    *xhi = quantile_sf(sf, nextafterf(0, 1.));
-}
-
 void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi) {
     *xlo = quantile_ext(ddf, 0, nextafterf(0, 1.));
     *xhi = quantile_ext(ddf, 1, 0);
@@ -577,11 +553,6 @@ void bounds_quantile_ext(ddf32_t ddf, double * xlo, double * xhi) {
 double generate_inversion(cdf32_t cdf, struct flip_state * prng) {
     float u = uniformf(RND_U, prng);
     return quantile(cdf, u);
-}
-
-double generate_inversion_sf(cdf32_t sf, struct flip_state * prng) {
-    float u = uniformf(RND_U, prng);
-    return quantile_sf(sf, u);
 }
 
 double generate_inversion_ext(ddf32_t ddf, struct flip_state * prng) {
