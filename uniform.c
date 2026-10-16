@@ -87,7 +87,7 @@ float uniformf(enum round_mode mode, struct flip_state * prng) {
     uint32_t mant, exp;
     sample_random_Emf(&exp, &mant, 0, prng);
     // If RND_N (Downey) and 0 mantissa, move to next exponent range w.p. 0.5
-    if (mode == RND_N) && (mant == 0) && (exp != 1) && (flip(prng)) {
+    if ((mode == RND_N) && (mant == 0) && (exp != 1) && flip(prng)) {
         exp += 1 + (exp==0);
     };
     // Combine exponent and mantissa.
@@ -103,7 +103,7 @@ double uniform(enum round_mode mode, struct flip_state * prng) {
     uint64_t mant, exp;
     sample_random_Em(&exp, &mant, 0, prng);
     // If RND_N (Downey) and 0 mantissa, move to next exponent range w.p. 0.5
-    if (mode == RND_N) && (mant == 0) && (exp != 1) && (flip(prng)) {
+    if ((mode == RND_N) && (mant == 0) && (exp != 1) && flip(prng)) {
         exp += 1 + (exp == 0);
     }
     // Combine exponent and mantissa.
